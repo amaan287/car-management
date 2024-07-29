@@ -63,7 +63,7 @@ export default function Search(): JSX.Element {
       }
     };
     fetchPosts();
-  }, [location.search]);
+  }, [location.search, sidebarData]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>

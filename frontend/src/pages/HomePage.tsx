@@ -4,12 +4,28 @@ import { useEffect, useState } from "react";
 import PostCard from "../components/PostCard";
 
 export default function Home() {
-  const [posts, setPosts] = useState<{ _id: string }[]>([]);
+  const [posts, setPosts] = useState<
+    {
+      _id: string;
+      slug: string;
+      image: string;
+      title: string;
+      category: string;
+    }[]
+  >([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
       const res = await fetch("/api/post/getPosts");
-      const data = await res.json();
+      const data: {
+        posts: {
+          _id: string;
+          slug: string;
+          image: string;
+          title: string;
+          category: string;
+        }[];
+      } = await res.json();
       setPosts(data.posts);
     };
     fetchPosts();

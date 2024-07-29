@@ -10,6 +10,7 @@ interface Post {
   image: string;
   content: string;
   createdAt: string;
+  slug: string;
 }
 
 export default function PostPage(): JSX.Element {
