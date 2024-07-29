@@ -11,7 +11,10 @@ interface SidebarData {
 
 interface Post {
   _id: string;
-  // Add other properties of the post object here
+  slug: string;
+  image: string;
+  title: string;
+  category: string;
 }
 
 export default function Search(): JSX.Element {
