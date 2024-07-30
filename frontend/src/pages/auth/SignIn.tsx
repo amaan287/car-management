@@ -10,6 +10,7 @@ import {
   signInFailure,
 } from "../../redux/user/userSlice";
 import { RootState } from "../../redux/store";
+import OAuth from "../../components/OAuth";
 
 export interface FormData {
   email?: string;
@@ -93,6 +94,7 @@ function SignIn() {
               )}
             </Button>
           </form>
+          <OAuth />
           <div className="flex gap-2 text-sm mt-5 items-center justify-center">
             <span>Don't have an account?</span>
             <Link to="/sign-up" className="">

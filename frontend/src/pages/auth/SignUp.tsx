@@ -3,6 +3,7 @@ import { Label } from "flowbite-react/components/Label";
 import { TextInput } from "flowbite-react/components/TextInput";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import OAuth from "../../components/OAuth";
 interface FormData {
   username?: string;
   email?: string;
@@ -103,6 +104,7 @@ function SignUp() {
               )}
             </Button>
           </form>
+          <OAuth />
 
           <div className="flex gap-2 text-sm mt-7 justify-center items-center">
             <span>Already have an account?</span>
