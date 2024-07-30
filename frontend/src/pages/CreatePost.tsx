@@ -116,9 +116,10 @@ export default function CreatePost(): JSX.Element {
             }
           >
             <option value="uncategorized">Select a category</option>
-            <option value="javascript">JavaScript</option>
-            <option value="reactjs">React.js</option>
-            <option value="nextjs">Next.js</option>
+            <option value="plein air">Plein air</option>
+            <option value="pencil portrait">Pencil Portrait</option>
+            <option value="acryclic portrait">Acrylic Portrait</option>
+            <option value="landscape">Landscape</option>
           </Select>
         </div>
         <div className="flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3">
@@ -130,7 +131,7 @@ export default function CreatePost(): JSX.Element {
           />
           <Button
             type="button"
-            gradientDuoTone="purpleToBlue"
+            color={"gray"}
             size="sm"
             outline
             onClick={handleUpdloadImage}

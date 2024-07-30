@@ -80,11 +80,13 @@ export default function PostPage(): JSX.Element {
           {post && post.category}
         </Button>
       </Link>
-      <img
-        src={post?.image ?? ""}
-        alt={post?.title ?? ""}
-        className="mt-10 p-3 max-h-[600px] w-full object-cover"
-      />
+      <div className="w-full flex pt-10  justify-center">
+        <img
+          src={post?.image ?? ""}
+          alt={post?.title ?? ""}
+          className="p-3 h-[60%] w-[60%] md:h-[40%] md:w-[40%]  object-cover"
+        />
+      </div>
       <div className="flex justify-between p-3 border-b border-slate-500 mx-auto w-full max-w-2xl text-xs">
         <span>{post && new Date(post.createdAt).toLocaleDateString()}</span>
         <span className="italic">
