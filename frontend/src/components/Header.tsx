@@ -12,6 +12,7 @@ function Header() {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state: RootState) => state.user);
   const [searchTerm, setSearchTerm] = useState("");
+
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const searchTermFromUrl = urlParams.get("searchTerm");
@@ -44,51 +45,59 @@ function Header() {
     navigate(`/search?${searchQuery}`);
   };
   return (
-    <Navbar className="border-b-2">
-      <Link to="/" className="text-sm sm:text-xl font-semibold ">
-        Blog
-      </Link>
-      <form onSubmit={handleSubmit}>
-        <TextInput
-          type="text"
-          placeholder="Search.."
-          rightIcon={AiOutlineSearch}
-          className="hidden lg:inline"
-        />
-      </form>
-      <Button
-        className="bg-transparent text-lg shadow-md w-12 h-10 items-center lg:hidden"
-        pill
-        color={"gray"}
-      >
-        <AiOutlineSearch />
-      </Button>
-      {currentUser ? (
-        <Dropdown
-          arrowIcon={false}
-          inline
-          label={<Avatar alt="user" img={currentUser.profilePicture} rounded />}
-        >
-          <Dropdown.Header>
-            <span className="block text-sm">@{currentUser.username}</span>
-            <span className="block text-sm font-medium truncate">
-              {currentUser.email}
-            </span>
-          </Dropdown.Header>
-          <Link to={"/dashboard?tab=profile"}>
-            <Dropdown.Item>Profile</Dropdown.Item>
-          </Link>
-          <Dropdown.Divider />
-          <Dropdown.Item onClick={handleSignout}>Sign out</Dropdown.Item>
-        </Dropdown>
-      ) : (
-        <div>
-          <Link to={"/sign-in"}>
-            <Button color={"black"}>SignIn</Button>
-          </Link>
-        </div>
-      )}
-    </Navbar>
+    <div className="fixed w-screen">
+      <Navbar className="border-b-2">
+        <Link to="/" className="text-sm sm:text-xl font-semibold ">
+          Blog
+        </Link>
+        <form onSubmit={handleSubmit}>
+          <TextInput
+            type="text"
+            placeholder="Search.."
+            rightIcon={AiOutlineSearch}
+            className="hidden lg:inline"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </form>
+        <Link to={"/search"}>
+          <Button
+            className="bg-transparent text-lg shadow-md w-12 h-10 items-center lg:hidden"
+            pill
+            color={"gray"}
+          >
+            <AiOutlineSearch />
+          </Button>
+        </Link>
+        {currentUser ? (
+          <Dropdown
+            arrowIcon={false}
+            inline
+            label={
+              <Avatar alt="user" img={currentUser.profilePicture} rounded />
+            }
+          >
+            <Dropdown.Header>
+              <span className="block text-sm">@{currentUser.username}</span>
+              <span className="block text-sm font-medium truncate">
+                {currentUser.email}
+              </span>
+            </Dropdown.Header>
+            <Link to={"/dashboard?tab=profile"}>
+              <Dropdown.Item>Profile</Dropdown.Item>
+            </Link>
+            <Dropdown.Divider />
+            <Dropdown.Item onClick={handleSignout}>Sign out</Dropdown.Item>
+          </Dropdown>
+        ) : (
+          <div>
+            <Link to={"/sign-in"}>
+              <Button color={"black"}>SignIn</Button>
+            </Link>
+          </div>
+        )}
+      </Navbar>
+    </div>
   );
 }
 
