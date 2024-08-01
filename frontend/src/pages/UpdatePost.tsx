@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Alert, Button, FileInput, Select, TextInput } from "flowbite-react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import {
@@ -14,6 +13,19 @@ import "react-circular-progressbar/dist/styles.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Alert } from "@/components/ui/alert";
+import { FileInput } from "flowbite-react";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+  SelectItem,
+} from "@/components/ui/select";
 
 interface FormData {
   _id?: string;
@@ -51,10 +63,8 @@ export default function UpdatePost() {
           setPublishError(data.message);
           return;
         }
-        if (res.ok) {
-          setPublishError(null);
-          setFormData(data.posts[0]);
-        }
+        setPublishError(null);
+        setFormData(data.posts[0]);
       } catch (error) {
         console.log((error as Error).message);
       }
@@ -120,10 +130,8 @@ export default function UpdatePost() {
         return;
       }
 
-      if (res.ok) {
-        setPublishError(null);
-        navigate(`/post/${data.slug}`);
-      }
+      setPublishError(null);
+      navigate(`/post/${data.slug}`);
     } catch (error) {
       setPublishError("Something went wrong");
     }
@@ -134,7 +142,7 @@ export default function UpdatePost() {
       <h1 className="text-center text-3xl my-7 font-semibold">Update post</h1>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4 sm:flex-row justify-between">
-          <TextInput
+          <Input
             type="text"
             placeholder="Title"
             required
@@ -145,28 +153,37 @@ export default function UpdatePost() {
             }
             value={formData.title}
           />
-          <Select
-            onChange={(e) =>
-              setFormData({ ...formData, category: e.target.value })
-            }
-            value={formData.category}
-          >
-            <option value="uncategorized">Select a category</option>
-            <option value="javascript">JavaScript</option>
-            <option value="reactjs">React.js</option>
-            <option value="nextjs">Next.js</option>
-          </Select>
+          <div className="">
+            <Select
+              onValueChange={(value) =>
+                setFormData({ ...formData, category: value })
+              }
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select a category" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Category</SelectLabel>
+                  <SelectItem value="plein air">Plein air</SelectItem>
+                  <SelectItem value="pencil sketch">Pencil Sketch</SelectItem>
+                  <SelectItem value="pencil portrait">
+                    Pencil Portrait
+                  </SelectItem>
+                  <SelectItem value="acrylic portrait">
+                    Acrylic Portrait
+                  </SelectItem>
+                  <SelectItem value="landscape">Landscape</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
         <div className="flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3">
-          <FileInput
-            accept="image/*"
-            onChange={(e) => setFile(e.target.files?.[0] || null)}
-          />
+          <FileInput onChange={(e) => setFile(e.target.files?.[0] || null)} />
           <Button
             type="button"
-            gradientDuoTone="purpleToBlue"
             size="sm"
-            outline
             onClick={handleUploadImage}
             disabled={!!imageUploadProgress}
           >
@@ -182,7 +199,7 @@ export default function UpdatePost() {
             )}
           </Button>
         </div>
-        {imageUploadError && <Alert color="failure">{imageUploadError}</Alert>}
+        {imageUploadError && <Alert>{imageUploadError}</Alert>}
         {formData.image && (
           <img
             src={formData.image}
@@ -195,13 +212,9 @@ export default function UpdatePost() {
           value={formData.content}
           placeholder="Write something..."
           className="h-72 mb-12"
-          onChange={(value) => {
-            setFormData({ ...formData, content: value });
-          }}
+          onChange={(value) => setFormData({ ...formData, content: value })}
         />
-        <Button type="submit" gradientDuoTone="purpleToPink">
-          Update post
-        </Button>
+        <Button type="submit">Update post</Button>
         {publishError && (
           <Alert className="mt-5" color="failure">
             {publishError}

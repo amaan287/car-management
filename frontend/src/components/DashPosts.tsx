@@ -1,10 +1,18 @@
 import { useEffect, useState } from "react";
-import { Modal, Table, Button } from "flowbite-react";
+import { Modal } from "flowbite-react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { RootState } from "../redux/store";
-
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "./ui/table";
+import { Button } from "./ui/button";
 interface Post {
   _id: string;
   updatedAt: string;
@@ -30,6 +38,7 @@ export default function DashPosts() {
         const data = await res.json();
         if (res.ok) {
           setUserPosts(data.posts);
+
           if (data.posts.length < 9) {
             setShowMore(false);
           }
@@ -72,6 +81,7 @@ export default function DashPosts() {
       );
       const data = await res.json();
       if (!res.ok) {
+        alert("post deleted");
         console.log(data.message);
       } else {
         setUserPosts((prev) =>
@@ -84,30 +94,27 @@ export default function DashPosts() {
   };
 
   return (
-    <div className="table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
+    <div className="table-auto w-screen overflow-x-scroll md:mx-auto py-3 px-5 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
       {currentUser?.isAdmin && userPosts.length > 0 ? (
         <>
-          <Table hoverable className="shadow-md">
-            <Table.Head>
-              <Table.HeadCell>Date updated</Table.HeadCell>
-              <Table.HeadCell>Post image</Table.HeadCell>
-              <Table.HeadCell>Post title</Table.HeadCell>
-              <Table.HeadCell>Category</Table.HeadCell>
-              <Table.HeadCell>Delete</Table.HeadCell>
-              <Table.HeadCell>
+          <Table className="shadow-xl w-[100%] mx-auto ">
+            <TableHeader>
+              <TableHead>Date updated</TableHead>
+              <TableHead>Post image</TableHead>
+              <TableHead>Post title</TableHead>
+              <TableHead>Category</TableHead>
+              <TableHead>Delete</TableHead>
+              <TableHead>
                 <span>Edit</span>
-              </Table.HeadCell>
-            </Table.Head>
-            <Table.Body className="divide-y">
+              </TableHead>
+            </TableHeader>
+            <TableBody className="divide-y">
               {userPosts.map((post) => (
-                <Table.Row
-                  key={post._id}
-                  className="bg-white dark:border-gray-700 dark:bg-gray-800"
-                >
-                  <Table.Cell>
+                <TableRow key={post._id} className="">
+                  <TableCell>
                     {new Date(post.updatedAt).toLocaleDateString()}
-                  </Table.Cell>
-                  <Table.Cell>
+                  </TableCell>
+                  <TableCell>
                     <Link to={`/post/${post.slug}`}>
                       <img
                         src={post.image}
@@ -115,17 +122,17 @@ export default function DashPosts() {
                         className="w-20 h-10 object-cover bg-gray-500"
                       />
                     </Link>
-                  </Table.Cell>
-                  <Table.Cell>
+                  </TableCell>
+                  <TableCell>
                     <Link
                       className="font-medium text-gray-900 dark:text-white"
                       to={`/post/${post.slug}`}
                     >
                       {post.title}
                     </Link>
-                  </Table.Cell>
-                  <Table.Cell>{post.category}</Table.Cell>
-                  <Table.Cell>
+                  </TableCell>
+                  <TableCell>{post.category}</TableCell>
+                  <TableCell>
                     <span
                       onClick={() => {
                         setShowModal(true);
@@ -135,18 +142,18 @@ export default function DashPosts() {
                     >
                       Delete
                     </span>
-                  </Table.Cell>
-                  <Table.Cell>
+                  </TableCell>
+                  <TableCell>
                     <Link
                       className="text-teal-500 hover:underline"
                       to={`/update-post/${post._id}`}
                     >
                       <span>Edit</span>
                     </Link>
-                  </Table.Cell>
-                </Table.Row>
+                  </TableCell>
+                </TableRow>
               ))}
-            </Table.Body>
+            </TableBody>
           </Table>
           {showMore && (
             <button

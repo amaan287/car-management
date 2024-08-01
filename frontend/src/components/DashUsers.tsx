@@ -1,10 +1,20 @@
-import { Modal, Table, Button } from "flowbite-react";
+import { Modal } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { RootState } from "../redux/store";
-
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Button } from "./ui/button";
 export interface User {
   _id: string;
   createdAt: string;
@@ -30,31 +40,39 @@ export default function DashUsers() {
       try {
         const res = await fetch(`/api/user/getusers`);
         const data = await res.json();
+        console.log("Fetched users:", data); // Debug log
+
         if (res.ok) {
-          setUsers(data.users);
+          setUsers(data.users || []);
           if (data.users.length < 9) {
             setShowMore(false);
           }
+        } else {
+          console.error("Failed to fetch users:", data.message);
         }
       } catch (error) {
         console.log((error as Error).message);
       }
     };
-    if (currentUser?.isAdmin) {
+    if (currentUser) {
       fetchUsers();
     }
-  }, [currentUser?._id, currentUser?.isAdmin]);
+  }, [currentUser]);
 
   const handleShowMore = async () => {
     const startIndex = users.length;
     try {
       const res = await fetch(`/api/user/getusers?startIndex=${startIndex}`);
       const data = await res.json();
+      console.log("Fetched more users:", data); // Debug log
+
       if (res.ok) {
         setUsers((prev) => [...prev, ...data.users]);
         if (data.users.length < 9) {
           setShowMore(false);
         }
+      } else {
+        console.error("Failed to fetch more users:", data.message);
       }
     } catch (error) {
       console.log((error as Error).message);
@@ -67,11 +85,13 @@ export default function DashUsers() {
         method: "DELETE",
       });
       const data = await res.json();
+      console.log("Deleted user:", data); // Debug log
+
       if (res.ok) {
         setUsers((prev) => prev.filter((user) => user._id !== userIdToDelete));
         setShowModal(false);
       } else {
-        console.log(data.message);
+        console.error("Failed to delete user:", data.message);
       }
     } catch (error) {
       console.log((error as Error).message);
@@ -79,41 +99,44 @@ export default function DashUsers() {
   };
 
   return (
-    <div className="table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
-      {currentUser.isAdmin && users.length > 0 ? (
+    <div className="table-auto w-screen overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
+      {currentUser?.isAdmin && users.length > 0 ? (
         <>
-          <Table hoverable className="shadow-md">
-            <Table.Head>
-              <Table.HeadCell>Date created</Table.HeadCell>
-              <Table.HeadCell>User image</Table.HeadCell>
-              <Table.HeadCell>Username</Table.HeadCell>
-              <Table.HeadCell>Email</Table.HeadCell>
-              <Table.HeadCell>Admin</Table.HeadCell>
-              <Table.HeadCell>Delete</Table.HeadCell>
-            </Table.Head>
-            {users.map((user) => (
-              <Table.Body className="divide-y" key={user._id}>
-                <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                  <Table.Cell>
+          <Table className="shadow-md rounded-xl">
+            <TableCaption>List of accounts logged in</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Date created</TableHead>
+                <TableHead>User image</TableHead>
+                <TableHead>Username</TableHead>
+                <TableHead>Email</TableHead>
+                <TableHead>Admin</TableHead>
+                <TableHead>Delete</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {users.map((user) => (
+                <TableRow className=" " key={user._id}>
+                  <TableCell>
                     {new Date(user.createdAt).toLocaleDateString()}
-                  </Table.Cell>
-                  <Table.Cell>
+                  </TableCell>
+                  <TableCell>
                     <img
                       src={user.profilePicture}
                       alt={user.username}
                       className="w-10 h-10 object-cover bg-gray-500 rounded-full"
                     />
-                  </Table.Cell>
-                  <Table.Cell>{user.username}</Table.Cell>
-                  <Table.Cell>{user.email}</Table.Cell>
-                  <Table.Cell>
+                  </TableCell>
+                  <TableCell>{user.username}</TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>
                     {user.isAdmin ? (
                       <FaCheck className="text-green-500" />
                     ) : (
                       <FaTimes className="text-red-500" />
                     )}
-                  </Table.Cell>
-                  <Table.Cell>
+                  </TableCell>
+                  <TableCell>
                     <span
                       onClick={() => {
                         setShowModal(true);
@@ -123,10 +146,16 @@ export default function DashUsers() {
                     >
                       Delete
                     </span>
-                  </Table.Cell>
-                </Table.Row>
-              </Table.Body>
-            ))}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+            <TableFooter className="">
+              <TableRow>
+                <TableCell colSpan={5}>Total Users</TableCell>
+                <TableCell className="text-left">{users.length}</TableCell>
+              </TableRow>
+            </TableFooter>
           </Table>
           {showMore && (
             <button
@@ -146,20 +175,21 @@ export default function DashUsers() {
         popup
         size="md"
       >
-        <Modal.Header />
-        <Modal.Body>
-          <div className="text-center">
-            <HiOutlineExclamationCircle className="h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
-            <h3 className="mb-5 text-lg text-gray-500 dark:text-gray-400">
+        <Modal.Header className="bg-background" />
+        <Modal.Body className="bg-background">
+          <div className="text-center bg-background">
+            <HiOutlineExclamationCircle className="h-14 text-red-500 w-14 mb-4 mx-auto" />
+            <h3 className="mb-5 text-lg ">
               Are you sure you want to delete this user?
             </h3>
             <div className="flex justify-center gap-4">
-              <Button color="failure" onClick={handleDeleteUser}>
+              <Button
+                className="bg-gradient-to-r from-red-500 to-pink-600 text-white"
+                onClick={handleDeleteUser}
+              >
                 Yes, I'm sure
               </Button>
-              <Button color="gray" onClick={() => setShowModal(false)}>
-                No, cancel
-              </Button>
+              <Button onClick={() => setShowModal(false)}>No, cancel</Button>
             </div>
           </div>
         </Modal.Body>

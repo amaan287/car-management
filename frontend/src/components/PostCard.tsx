@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Button } from "./ui/button";
 
 interface PostCardProps {
   post: {
@@ -6,27 +7,47 @@ interface PostCardProps {
     image: string;
     title: string;
     category: string;
+    content: string;
+    createdAt: Date;
   };
 }
 
 export default function PostCard({ post }: PostCardProps) {
+  const truncateContent = (content: string, maxLength: number) => {
+    const stripped = content.replace(/<[^>]+>/g, "");
+    if (stripped.length <= maxLength) return stripped;
+    return (
+      stripped.substr(0, stripped.lastIndexOf(" ", maxLength)) + "  ...."
+      // +
+      // "read more"
+    );
+  };
+
   return (
-    <div className="group relative w-full border border-teal-500 hover:border-2 h-[400px] overflow-hidden rounded-lg sm:w-[430px] transition-all">
+    <div className=" dark:bg-card bg-slate-gray-100 group py-2 relative w-full border  h-[600px] overflow-hidden rounded-2xl sm:w-[430px] transition-all shadow-xl px-5">
       <Link to={`/post/${post.slug}`}>
         <img
           src={post.image}
           alt="post cover"
-          className="h-[260px] w-full  object-cover group-hover:h-[200px] transition-all duration-300 z-20"
+          className="h-[520px] w-[400px] mx-auto rounded-xl object-cover group-hover:h-[350px] transition-all duration-300 z-20"
         />
       </Link>
-      <div className="p-3 flex flex-col gap-2">
-        <p className="text-lg font-semibold line-clamp-2">{post.title}</p>
-        <span className="italic text-sm">{post.category}</span>
+      <div className="py-3 flex flex-col gap-2">
+        <div className="flex justify-between items-center">
+          <p className="text-lg font-semibold line-clamp-2">{post.title}</p>
+
+          <p className="italic w-fit bg-background dark:bg-gray-950  text-text border rounded-xl text-sm px-2 py-1">
+            {post.category}
+          </p>
+        </div>
+        <div className="px-2 text-sm mt-10 text-balance text-center">
+          {truncateContent(post.content, 200)}
+        </div>
         <Link
           to={`/post/${post.slug}`}
-          className="z-10 group-hover:bottom-0 absolute bottom-[-200px] left-0 right-0 border border-teal-500 text-teal-500 hover:bg-teal-500 hover:text-white transition-all duration-300 text-center py-2 rounded-md !rounded-tl-none m-2"
+          className="text-blue-500 hover:underline"
         >
-          Read article
+          <Button className="w-full bg-card text-white">Read more</Button>
         </Link>
       </div>
     </div>

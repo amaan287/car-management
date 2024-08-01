@@ -1,4 +1,4 @@
-import { Alert, Button, Modal, TextInput } from "flowbite-react";
+import { Alert, Modal } from "flowbite-react";
 import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -23,6 +23,8 @@ import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { RootState } from "../redux/store";
 import { CircularProgressbar } from "react-circular-progressbar";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
 
 export default function DashProfile() {
   const { currentUser, error, loading } = useSelector(
@@ -219,37 +221,32 @@ export default function DashProfile() {
           <Alert color="failure">{imageFileUploadError}</Alert>
         )}
 
-        <TextInput
+        <Input
           type="text"
           id="username"
           placeholder="username"
           defaultValue={currentUser?.username}
           onChange={handleChange}
         />
-        <TextInput
+        <Input
           type="email"
           id="email"
           placeholder="email"
           defaultValue={currentUser?.email}
           onChange={handleChange}
         />
-        <TextInput
+        <Input
           type="password"
           id="password"
           placeholder="password"
           onChange={handleChange}
         />
-        <Button
-          type="submit"
-          color="gray"
-          outline
-          disabled={loading || imageFileUploading}
-        >
+        <Button type="submit" disabled={loading || imageFileUploading}>
           {loading ? "Loading..." : "Update"}
         </Button>
         {currentUser?.isAdmin && (
           <Link to={"/create-post"}>
-            <Button type="button" color="gray" className="w-full">
+            <Button type="button" className="w-full">
               Create a post
             </Button>
           </Link>

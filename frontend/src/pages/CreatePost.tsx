@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, FormEvent } from "react";
-import { Alert, Button, FileInput, Select, TextInput } from "flowbite-react";
+import { Alert } from "flowbite-react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import {
@@ -13,6 +13,17 @@ import { app } from "../firebase";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useNavigate } from "react-router-dom";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 interface FormData {
   title?: string;
@@ -100,40 +111,53 @@ export default function CreatePost(): JSX.Element {
       <h1 className="text-center text-3xl my-7 font-semibold">Create a post</h1>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4 sm:flex-row justify-between">
-          <TextInput
+          <Input
             type="text"
             placeholder="Title"
             required
             id="title"
-            className="flex-1"
+            className="flex-1 "
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setFormData({ ...formData, title: e.target.value })
             }
           />
-          <Select
-            onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-              setFormData({ ...formData, category: e.target.value })
-            }
-          >
-            <option value="uncategorized">Select a category</option>
-            <option value="plein air">Plein air</option>
-            <option value="pencil portrait">Pencil Portrait</option>
-            <option value="acryclic portrait">Acrylic Portrait</option>
-            <option value="landscape">Landscape</option>
-          </Select>
+          <div className="">
+            <Select
+              onValueChange={(value) =>
+                setFormData({ ...formData, category: value })
+              }
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select a category" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Category</SelectLabel>
+                  <SelectItem value="plein air">Plein air</SelectItem>
+                  <SelectItem value="pencil sketch">Pencil Sketch</SelectItem>
+                  <SelectItem value="pencil portrait">
+                    Pencil Portrait
+                  </SelectItem>
+                  <SelectItem value="acrylic portrait">
+                    Acrylic Portrait
+                  </SelectItem>
+                  <SelectItem value="landscape">Landscape</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
-        <div className="flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3">
-          <FileInput
-            accept="image/*"
+        <div className="flex gap-4 items-center justify-between border p-3">
+          <Input
+            id="image"
+            className="text-gray-400 bg-black"
+            type="file"
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setFile(e.target.files ? e.target.files[0] : null)
             }
           />
           <Button
-            type="button"
-            color={"gray"}
             size="sm"
-            outline
             onClick={handleUpdloadImage}
             disabled={!!imageUploadProgress}
           >
@@ -165,9 +189,7 @@ export default function CreatePost(): JSX.Element {
             setFormData({ ...formData, content: value });
           }}
         />
-        <Button type="submit" gradientDuoTone="purpleToPink">
-          Publish
-        </Button>
+        <Button type="submit">Publish</Button>
         {publishError && (
           <Alert className="mt-5" color="failure">
             {publishError}
