@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import PostCard from "@/components/PostCard";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { DirectionAwareHover } from "../components/ui/direction-aware-hover";
 
 interface Post {
   _id: string;
@@ -89,15 +88,6 @@ function AllPosts() {
       <div className="my-10 grid  w-fit mx-auto  grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 px-4  ">
         {posts.slice(1).map((post) => (
           <PostCard key={post._id} post={post} />
-        ))}
-      </div>
-
-      <div className="h-[40rem] relative  flex items-center justify-center">
-        {posts.slice(1).map((post) => (
-          <DirectionAwareHover key={post._id} post={post} imageUrl={post.image}>
-            <p className="font-bold text-xl">In the mountains</p>
-            <p className="font-normal text-sm">$1299 / night</p>
-          </DirectionAwareHover>
         ))}
       </div>
     </div>
