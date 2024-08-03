@@ -36,7 +36,7 @@ export default function PostCard({ post }: PostCardProps) {
         <div className="flex justify-between items-center">
           <p className="text-lg font-semibold line-clamp-2">{post.title}</p>
 
-          <p className="italic w-fit bg-background dark:bg-gray-950  text-text border rounded-xl text-sm px-2 py-1">
+          <p className="italic w-fit bg-background dark:bg-gray-950  text-text border rounded-xl text-xs self-center px-2 pb-1">
             {post.category}
           </p>
         </div>
