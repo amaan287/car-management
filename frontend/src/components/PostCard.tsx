@@ -40,14 +40,14 @@ export default function PostCard({ post }: PostCardProps) {
             {post.category}
           </p>
         </div>
-        <div className="px-2 text-sm mt-10 text-balance text-center">
+        <div className="px-2 text-sm mt-5 text-balance text-center">
           {truncateContent(post.content, 200)}
         </div>
         <Link
           to={`/post/${post.slug}`}
           className="text-blue-500 hover:underline"
         >
-          <Button className="w-full hover:-translate-y-0.5 cursor-pointer transition-all text-white bg-card hover:bg-card border-gray-900 dark:bg-secondary dark:text-gray-900 mt-4">
+          <Button className="w-full hover:-translate-y-0.5 cursor-pointer transition-all text-white bg-card hover:bg-card border-gray-900 dark:bg-secondary dark:text-gray-900 mt-2">
             Read more
           </Button>
         </Link>

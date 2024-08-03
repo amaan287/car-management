@@ -133,7 +133,7 @@ export default function UpdatePost() {
       setPublishError(null);
       navigate(`/post/${data.slug}`);
     } catch (error) {
-      setPublishError("Something went wrong");
+      setPublishError("Something went wrong" + (error as Error).message);
     }
   };
 

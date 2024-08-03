@@ -69,7 +69,7 @@ function AllPosts() {
             <div
               className="py-3 max-w-2xl text-md mx-auto w-full post-content"
               dangerouslySetInnerHTML={{
-                __html: posts[0].content,
+                __html: posts[0].content.substring(0, 995) + "...read more",
               }}
             ></div>
             {isNew && (
