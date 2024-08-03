@@ -94,7 +94,7 @@ export default function PostPage(): JSX.Element {
     return <div>No posts available.</div>;
   }
   return (
-    <main className="px-3 pt-3 pb-[30rem] flex flex-col max-w-6xl mx-auto min-h-screen">
+    <main className="px-3 pt-3 pb-[20rem] flex flex-col max-w-6xl mx-auto min-h-screen">
       <TracingBeam className="px-6">
         <h1 className="text-3xl mt-10 p-3 text-center font-serif max-w-2xl mx-auto lg:text-4xl">
           {post && post.title}

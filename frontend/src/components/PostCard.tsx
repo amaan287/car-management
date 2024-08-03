@@ -47,7 +47,9 @@ export default function PostCard({ post }: PostCardProps) {
           to={`/post/${post.slug}`}
           className="text-blue-500 hover:underline"
         >
-          <Button className="w-full bg-card text-white">Read more</Button>
+          <Button className="w-full hover:-translate-y-0.5 cursor-pointer transition-all text-white bg-card hover:bg-card border-gray-900 dark:bg-secondary dark:text-gray-900 mt-4">
+            Read more
+          </Button>
         </Link>
       </div>
     </div>

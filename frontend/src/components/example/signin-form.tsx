@@ -60,7 +60,7 @@ export default function SignInForm() {
       const data = await res.json();
       if (res.ok) {
         dispatch(signInSuccess(data));
-        navigate("/");
+        navigate("/home");
       } else {
         dispatch(signInFailure(data.message || "Sign in failed"));
       }
@@ -103,10 +103,10 @@ export default function SignInForm() {
   return (
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
       <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
-        Welcome to My Blog
+        Welcome to Daily airs
       </h2>
       <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">
-        Login now if you can because we don&apos;t
+        Login now
       </p>
 
       <form className="my-8" onSubmit={handleSubmit}>
@@ -135,10 +135,10 @@ export default function SignInForm() {
           type="submit"
         >
           {loading ? (
-            <>
+            <div className="flex justify-center items-center">
               <Spinner size="sm" />
               <span className="pl-3">Loading...</span>
-            </>
+            </div>
           ) : (
             "Sign in"
           )}

@@ -46,7 +46,10 @@ export function DockD() {
   return (
     <div className="relative flex h-full w-[95vw] flex-col items-center justify-center overflow-hidden rounded-lg  bg-secondary dark:bg-card md:shadow-xl py-3">
       <TooltipProvider>
-        <Dock direction="middle">
+        <Dock
+          direction="middle"
+          className="w-[70vw] border-primary flex items-center justify-center "
+        >
           {Object.entries(DATA.contact.social).map(([name, social]) => (
             <DockIcon key={name}>
               <Tooltip>

@@ -89,7 +89,7 @@ export default function DashComments() {
   };
 
   return (
-    <div className="table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
+    <div className="table-auto w-screen overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
       {currentUser?.isAdmin && comments.length > 0 ? (
         <>
           <Table className="shadow-md">
@@ -105,7 +105,7 @@ export default function DashComments() {
             </TableHeader>
             {comments.map((comment) => (
               <TableBody className="divide-y" key={comment._id}>
-                <TableRow className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                <TableRow className="">
                   <TableCell>
                     {new Date(comment.updatedAt).toLocaleDateString()}
                   </TableCell>

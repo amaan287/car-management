@@ -16,6 +16,7 @@ import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { Button } from "./ui/button";
 import { ModeToggle } from "./mode-toggle";
 import { Input } from "./ui/input";
+import { motion } from "framer-motion";
 function Header() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -55,10 +56,20 @@ function Header() {
     navigate(`/search?${searchQuery}`);
   };
   return (
-    <div className=" top-0 z-50 pt-2">
+    <div className=" top-0 z-50 ">
       <nav className="border-b-2 mx-2 bg-gray-100 dark:bg-card rounded-xl shadow-xl flex justify-between px-5 py-2 items-center z-50">
-        <Link to="/" className="text-sm sm:text-xl font-semibold ">
-          Blog
+        <Link
+          to="/home"
+          className="text-sm sm:text-xl font-semibold flex items-center justify-center gap-2"
+        >
+          <div className="h-5 w-6 bg-black dark:bg-white rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="font-medium text-black dark:text-white whitespace-pre"
+          >
+            Daily airs
+          </motion.span>
         </Link>
         <form onSubmit={handleSubmit}>
           <Input

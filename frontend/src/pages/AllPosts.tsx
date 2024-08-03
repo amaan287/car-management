@@ -56,7 +56,7 @@ function AllPosts() {
     Date.now() - new Date(posts[0].createdAt).getTime() <
     1000 * 60 * 60 * 24 * 7;
   return (
-    <div className=" mt-5 ">
+    <div className=" mt-5 h-full pb-2 ">
       <div className="px-10 bg-secondary  py-5 flex items-center border m-4 lg:h-[600px] dark:bg-card  shadow-2xl rounded-2xl pb-4">
         <div className="flex flex-col lg:flex-row w-full  ">
           <img
@@ -78,8 +78,8 @@ function AllPosts() {
               </p>
             )}
             <Link to={`/post/${posts[0].slug}`}>
-              <Button className=" text-white bg-card  shadow-gray-500 hover:-translate-y-0.5 cursor-pointer transition-all">
-                Check it out
+              <Button className=" text-white bg-card hover:bg-card border-gray-900 dark:bg-secondary dark:text-gray-900  shadow-gray-500 hover:-translate-y-0.5 cursor-pointer transition-all mt-2">
+                Read more
               </Button>
             </Link>
           </div>

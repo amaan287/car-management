@@ -5,7 +5,7 @@ import OrbitingCircles from "./magicui/orbiting-circles";
 export function OrbitingCirclesComp() {
   return (
     <div className="border h-full rounded-lg bg-secondary shadow-xl dark:bg-card  ">
-      <div className="relative flex h-[500px] w-[95vw] flex-col items-center justify-center overflow-hidden  bg-secondary dark:bg-card">
+      <div className="relative flex rounded-t-xl h-[80vh] w-[98vw] flex-col items-center justify-center overflow-hidden  bg-secondary dark:bg-card">
         <span className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-gray-300 bg-clip-text text-center text-8xl font-semibold leading-none text-transparent dark:from-white dark:to-black">
           Socials
         </span>
