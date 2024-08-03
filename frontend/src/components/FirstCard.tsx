@@ -11,7 +11,7 @@ export default function FirstCard() {
         <div className="h-full w-full flex  md:flex-col  justify-center">
           <div className="flex flex-col-reverse lg:flex-row items-center w-[90vw] h-[100vh] lg:items-center justify-center  space-y-6 lg:space-y-0 lg:space-x-8">
             <div className="w-full lg:w-2/3 space-y-4 lg:pt-12">
-              <h1 className="text-white text-xl sm:text-2xl md:text-3xl mt-2 lg:text-4xl font-semibold max-w-xs text-left [text-wrap:balance] font-sans">
+              <h1 className="text-white text-xl sm:text-2xl md:text-3xl mt-2 lg:text-4xl font-semibold max-w-xs lg:text-left [text-wrap:balance] font-sans mx-auto lg:mx-0  text-center">
                 Welcome to Priyansh Soni's Art Gallery
               </h1>
               <p className="text-white bg-opacity-40 bg-black py-2 rounded-lg text-sm sm:text-base md:text-lg font-medium font-sans text-left">

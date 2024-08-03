@@ -58,16 +58,16 @@ function AllPosts() {
   return (
     <div className=" mt-5 h-full pb-2 ">
       <div className="px-10 bg-secondary  py-5 flex items-center border m-4 lg:h-[600px] dark:bg-card  shadow-2xl rounded-2xl pb-4">
-        <div className="flex flex-col lg:flex-row w-full  ">
+        <div className="flex flex-col lg:flex-row w-full items-center">
           <img
             src={posts[0].image}
             alt={posts[0].title}
-            className="w-full h-full max-w-sm rounded-xl shadow-2xl  mr-4"
+            className="lg:w-full lg:h-full h-[70%] w-[70%] max-w-sm rounded-xl shadow-2xl  mr-4"
           />
           <div>
-            <h1 className="text-5xl font-bold">{posts[0].title}</h1>
+            <h1 className="md:text-5xl text-2xl font-bold">{posts[0].title}</h1>
             <div
-              className="py-3 max-w-2xl mx-auto w-full post-content"
+              className="py-3 max-w-2xl text-md mx-auto w-full post-content"
               dangerouslySetInnerHTML={{
                 __html: posts[0].content,
               }}

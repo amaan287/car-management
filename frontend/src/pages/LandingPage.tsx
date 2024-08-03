@@ -12,7 +12,7 @@ export default function LandingPage() {
         <div className="z-50 flex flex-col w-[50vw]  items-center  ">
           <div className="flex flex-col items-center mb-40">
             <BlurFade delay={0.5} inView>
-              <h1 className="text-slate-900 bg-white bg-opacity-40 px-8 py-4 rounded-xl shadow-lg shadow-gray-700  font-bold text-4xl md:text-5xl">
+              <h1 className="text-slate-900 bg-white bg-opacity-40 px-8 py-4 rounded-xl shadow-lg shadow-gray-700  font-bold text-2xl md:text-4xl lg:text-5xl">
                 Explore the World of Art with{" "}
                 <span className="text-indigo-800 italic">Daily Airs</span>
               </h1>
@@ -21,7 +21,7 @@ export default function LandingPage() {
             <BlurFade delay={0.5} inView>
               <div className=" bg-white  shadow-lg shadow-gray-700 rounded-2xl bg-opacity-40 px-10 py-4 mt-2 flex flex-col">
                 <BlurFade delay={0.5} inView>
-                  <p className="md:text-xl text-lg font-semibold text-slate-900">
+                  <p className="md:text-xl sm:text-lg text-sm font-semibold text-slate-900">
                     <span className="font-semibold">
                       Your Daily Source for Artistic Inspiration.
                     </span>
