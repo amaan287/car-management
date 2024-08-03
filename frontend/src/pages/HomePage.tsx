@@ -1,4 +1,4 @@
-import { OrbitingCirclesComp } from "@/components/OrbitingCircles";
+// import { OrbitingCirclesComp } from "@/components/OrbitingCircles";
 import { Reviews } from "@/components/Reviews";
 import { ImageSlider } from "@/components/imageSlider";
 import FirstCard from "@/components/FirstCard";
@@ -59,9 +59,9 @@ export default function Home() {
       <div className="mt-2 flex flex-col items-center justify-start">
         <FirstCard />
       </div>
-      <div className="my-10 flex flex-col items-center justify-center">
+      {/* <div className="my-10 flex flex-col items-center justify-center">
         <OrbitingCirclesComp />
-      </div>
+      </div> */}
       <ImageSlider posts={posts} />
       <div className="flex flex-col items-center justify-center">
         <Reviews />

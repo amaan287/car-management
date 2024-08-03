@@ -14,7 +14,9 @@ interface Post {
   slug: string;
   image: string;
   title: string;
+  content: string;
   category: string;
+  createdAt: Date;
 }
 
 export default function Search(): JSX.Element {
