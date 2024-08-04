@@ -85,46 +85,70 @@ function Header() {
             <AiOutlineSearch />
           </Button>
         </Link>
+        <div className="flex gap-5 items-center justify-center">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <h1 className=" cursor-pointer font-semibold border px-2 py-1 rounded-lg">
+                Community
+              </h1>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56 py-4">
+              {/* <DropdownMenuLabel>
+              <span className="block text-sm"></span>
+            </DropdownMenuLabel> */}
+              {/* <DropdownMenuSeparator /> */}
+              <Link to={"/story"}>
+                <DropdownMenuCheckboxItem>My story</DropdownMenuCheckboxItem>
+              </Link>
+              <Link to={"/socials"}>
+                <DropdownMenuCheckboxItem>Socials</DropdownMenuCheckboxItem>
+              </Link>
+              {/* <Link to={"/dashboard?tab=profile"}>
+              <DropdownMenuCheckboxItem>Join now</DropdownMenuCheckboxItem>
+              </Link> */}
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <ModeToggle />
 
-        {currentUser ? (
-          <div className="flex gap-4">
-            <ModeToggle />
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <h1 className=" cursor-pointer">
-                  <Avatar
-                    alt="user"
-                    img={currentUser?.profilePicture}
-                    rounded
-                  />
-                </h1>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56">
-                <DropdownMenuLabel>
-                  <span className="block text-sm">
-                    @{currentUser?.username}
-                  </span>
-                  <span className="block text-sm font-medium truncate">
-                    {currentUser?.email}
-                  </span>
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <Link to={"/dashboard?tab=profile"}>
-                  <DropdownMenuCheckboxItem>Profile</DropdownMenuCheckboxItem>
-                </Link>
-                <DropdownMenuCheckboxItem onClick={handleSignout}>
-                  Signout
-                </DropdownMenuCheckboxItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        ) : (
-          <div>
-            <Link to={"/sign-in"}>
-              <Button color={"black"}>SignIn</Button>
-            </Link>
-          </div>
-        )}
+          {currentUser ? (
+            <div className="flex gap-4">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <h1 className=" cursor-pointer">
+                    <Avatar
+                      alt="user"
+                      img={currentUser?.profilePicture}
+                      rounded
+                    />
+                  </h1>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56">
+                  <DropdownMenuLabel>
+                    <span className="block text-sm">
+                      @{currentUser?.username}
+                    </span>
+                    <span className="block text-sm font-medium truncate">
+                      {currentUser?.email}
+                    </span>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <Link to={"/dashboard?tab=profile"}>
+                    <DropdownMenuCheckboxItem>Profile</DropdownMenuCheckboxItem>
+                  </Link>
+                  <DropdownMenuCheckboxItem onClick={handleSignout}>
+                    Signout
+                  </DropdownMenuCheckboxItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          ) : (
+            <div>
+              <Link to={"/sign-in"}>
+                <Button color={"black"}>SignIn</Button>
+              </Link>
+            </div>
+          )}
+        </div>
       </nav>
     </div>
   );

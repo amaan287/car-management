@@ -153,9 +153,9 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
             >
               <Link
                 to={"/all-posts"}
-                className=" h-full w-[30vw] lg:w-[20vw] border items-center flex justify-center bg-gray-200  bg-opacity-20 rounded-xl"
+                className=" h-full   aspect-3/4 w-[30vw] sm:w-[25vw] border items-center flex justify-center bg-gray-200  bg-opacity-20 rounded-xl"
               >
-                <div className="font-bold ">Show more</div>
+                <div className="font-bold">Show more</div>
               </Link>
             </motion.div>
           </div>

@@ -1,7 +1,18 @@
 import React, { FormEvent, useEffect, useState } from "react";
-import { Button, Select, TextInput } from "flowbite-react";
+
 import { useLocation, useNavigate } from "react-router-dom";
 import PostCard from "../components/PostCard";
+import { Input } from "./ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+import { Button } from "./ui/button";
 
 interface SidebarData {
   searchTerm: string;
@@ -40,7 +51,6 @@ export default function Search(): JSX.Element {
     const categoryFromUrl = urlParams.get("category");
     if (searchTermFromUrl || sortFromUrl || categoryFromUrl) {
       setSidebarData({
-        ...sidebarData,
         searchTerm: searchTermFromUrl ?? "",
         sort: sortFromUrl ?? "desc",
         category: categoryFromUrl ?? "uncategorized",
@@ -65,10 +75,12 @@ export default function Search(): JSX.Element {
       }
     };
     fetchPosts();
-  }, [location.search, sidebarData]);
+  }, [location.search]);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | { target: { id: string; value: string } }
   ) => {
     const { id, value } = e.target;
     setSidebarData((prev) => ({
@@ -79,9 +91,13 @@ export default function Search(): JSX.Element {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const urlParams = new URLSearchParams();
+    const urlParams = new URLSearchParams(location.search);
     Object.entries(sidebarData).forEach(([key, value]) => {
-      urlParams.set(key, value);
+      if (value) {
+        urlParams.set(key, value);
+      } else {
+        urlParams.delete(key);
+      }
     });
     navigate(`/search?${urlParams.toString()}`);
   };
@@ -113,7 +129,7 @@ export default function Search(): JSX.Element {
             <label className="whitespace-nowrap font-semibold">
               Search Term:
             </label>
-            <TextInput
+            <Input
               placeholder="Search..."
               id="searchTerm"
               type="text"
@@ -123,35 +139,65 @@ export default function Search(): JSX.Element {
           </div>
           <div className="flex items-center gap-2">
             <label className="font-semibold">Sort:</label>
-            <Select onChange={handleChange} value={sidebarData.sort} id="sort">
-              <option value="desc">Latest</option>
-              <option value="asc">Oldest</option>
+            <Select
+              value={sidebarData.sort}
+              onValueChange={(value) =>
+                handleChange({ target: { id: "sort", value } })
+              }
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Sort by" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Sort</SelectLabel>
+                  <SelectItem value="desc">Latest</SelectItem>
+                  <SelectItem value="asc">Oldest</SelectItem>
+                </SelectGroup>
+              </SelectContent>
             </Select>
           </div>
           <div className="flex items-center gap-2">
             <label className="font-semibold">Category:</label>
-            <Select
-              onChange={handleChange}
-              value={sidebarData.category}
-              id="category"
-            >
-              <option value="uncategorized">Select a category</option>
-              <option value="plein air">Plein air</option>
-              <option value="pencil portrait">Pencil Portrait</option>
-              <option value="acryclic portrait">Acrylic Portrait</option>
-              <option value="landscape">Landscape</option>
-            </Select>
+
+            <div className="">
+              <Select
+                value={sidebarData.category}
+                onValueChange={(value) =>
+                  handleChange({ target: { id: "category", value } })
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="category" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Category</SelectLabel>
+                    <SelectItem value="uncategorized">Uncategorized</SelectItem>
+                    <SelectItem value="plein air">Plein air</SelectItem>
+                    <SelectItem value="pencil sketch">Pencil Sketch</SelectItem>
+                    <SelectItem value="pencil portrait">
+                      Pencil Portrait
+                    </SelectItem>
+                    <SelectItem value="acrylic portrait">
+                      Acrylic Portrait
+                    </SelectItem>
+                    <SelectItem value="landscape">Landscape</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
-          <Button type="submit" outline color={"gray"}>
+          <Button type="submit" className="border">
             Apply Filters
           </Button>
         </form>
       </div>
-      <div className="w-full">
+      <div className="w-full ">
         <h1 className="text-3xl font-semibold sm:border-b border-gray-500 p-3 mt-5 ">
           Posts results:
         </h1>
-        <div className="p-7 flex flex-wrap gap-4">
+        <div className="p-7 flex flex-wrap gap-4  justify-center ">
           {!loading && posts.length === 0 && (
             <p className="text-xl text-gray-500">No posts found.</p>
           )}

@@ -94,7 +94,7 @@ export default function PostPage(): JSX.Element {
     return <div>No posts available.</div>;
   }
   return (
-    <main className="px-3 pt-3 pb-[20rem] flex flex-col max-w-6xl mx-auto min-h-screen">
+    <main className="px-3 pt-3 pb-[8rem] flex flex-col max-w-6xl mx-auto min-h-screen">
       <TracingBeam className="px-6">
         <h1 className="text-3xl mt-10 p-3 text-center font-serif max-w-2xl mx-auto lg:text-4xl">
           {post && post.title}
@@ -107,13 +107,15 @@ export default function PostPage(): JSX.Element {
             {post && post.category}
           </Button>
         </Link>
-        <div className="w-full flex pt-10  justify-center">
-          <img
-            src={post?.image ?? ""}
-            alt={post?.title ?? ""}
-            className="p-3 h-[60%] w-[60%] md:h-[40%] md:w-[40%]  object-cover"
-          />
-        </div>
+        <Link to={post?.image ?? ""} target="_blank" rel="noopener noreferrer">
+          <div className="w-full flex pt-10  justify-center">
+            <img
+              src={post?.image ?? ""}
+              alt={post?.title ?? ""}
+              className="p-3 h-[60%] w-[60%] md:h-[40%] md:w-[40%]  object-cover"
+            />
+          </div>
+        </Link>
         <div className="flex justify-between p-3 border-b border-slate-500 mx-auto w-full max-w-2xl text-xs">
           <span>{post && new Date(post.createdAt).toLocaleDateString()}</span>
           <span className="italic">
@@ -126,7 +128,13 @@ export default function PostPage(): JSX.Element {
         ></div>
         <div className="max-w-4xl mx-auto w-full"></div>
         <CommentSection postId={post?._id ?? ""} />
-        <div className="h-full w-fit relative mt-5 grid grid-cols-2 mx-auto">
+
+        <div className="flex items-center justify-center">
+          <h1 className="mx-auto ">
+            Tap or hover on cards to read description
+          </h1>
+        </div>
+        <div className="h-full w-fit relative mt-5 grid sm:grid-cols-2 grid-cols-1 mx-auto">
           {posts &&
             posts.slice(1, 5).map((post) => (
               <div className="p-2 col-span-1">
@@ -142,7 +150,7 @@ export default function PostPage(): JSX.Element {
       </TracingBeam>
       <Link
         to={"/all-posts"}
-        className="mx-auto text-2xl font-bold border px-4 py-2  rounded-xl shadow-xl"
+        className="mx-auto text-2xl font-bold border px-4 py-2 mt-4 rounded-xl shadow-xl"
       >
         <h1>View all</h1>
       </Link>

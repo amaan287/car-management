@@ -76,9 +76,23 @@ export default function SignInForm() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { email = "", password = "" } = formData;
 
-    if (!email || !password) {
+    // Get the current values from the form inputs
+    const emailInput = (
+      document.getElementById("email") as HTMLInputElement
+    ).value.trim();
+    const passwordInput = (
+      document.getElementById("password") as HTMLInputElement
+    ).value.trim();
+
+    // Update the formData state with the current input values
+    const updatedFormData = {
+      ...formData,
+      email: emailInput,
+      password: passwordInput,
+    };
+
+    if (!updatedFormData.email || !updatedFormData.password) {
       return dispatch(signInFailure("Please fill all the fields"));
     }
 
@@ -87,7 +101,7 @@ export default function SignInForm() {
       const res = await fetch("/api/auth/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(updatedFormData),
       });
       const data = await res.json();
       if (!res.ok || data.success === false) {
@@ -99,7 +113,10 @@ export default function SignInForm() {
       dispatch(signInFailure((error as Error).message));
     }
   };
-
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [id]: value.trim() }));
+  };
   return (
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
       <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
@@ -115,6 +132,7 @@ export default function SignInForm() {
           <Input
             onChange={handleChange}
             id="email"
+            onBlur={handleBlur}
             placeholder="projectmayhem@fc.com"
             type="email"
             className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
@@ -125,6 +143,7 @@ export default function SignInForm() {
           <Input
             id="password"
             onChange={handleChange}
+            onBlur={handleBlur}
             placeholder="••••••••"
             type="password"
             className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"

@@ -88,7 +88,7 @@ export function SideBar() {
     <div
       className={cn(
         "rounded-md flex flex-col md:flex-row bg-gray-100 dark:bg-neutral-800 w-full flex-1 max-w-7xl mx-auto border border-neutral-200 dark:border-neutral-700 overflow-hidden",
-        "h-[100vh]" // for your use case, use `h-screen` instead of `h-[60vh]`
+        "md:h-[100vh]" // for your use case, use `h-screen` instead of `h-[60vh]`
       )}
     >
       <Sidebar open={open} setOpen={setOpen}>
@@ -96,9 +96,26 @@ export function SideBar() {
           <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
             {open ? <Logo /> : <LogoIcon />}
             <div className="mt-8 flex flex-col gap-2">
-              {links.map((link, idx) => (
+              {links.slice(0, 2).map((link, idx) => (
                 <SidebarLink key={idx} link={link} />
               ))}
+              {currentUser?.isAdmin && (
+                <div className=" flex flex-col gap-2">
+                  {links.slice(2, 5).map((link, idx) => (
+                    <SidebarLink key={idx} link={link} />
+                  ))}
+                </div>
+              )}
+
+              <SidebarLink
+                link={{
+                  label: "Logout",
+                  href: handleSignout,
+                  icon: (
+                    <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+                  ),
+                }}
+              />
             </div>
           </div>
           <div>

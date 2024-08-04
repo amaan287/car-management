@@ -1,5 +1,3 @@
-"use client";
-
 import { useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -85,7 +83,7 @@ export const DirectionAwareHover = ({
         onMouseEnter={handleMouseEnter}
         ref={ref}
         className={cn(
-          "md:h-96 w-60 h-60 md:w-96 bg-transparent rounded-lg overflow-hidden group/card relative",
+          "md:h-96  sm:w-60 sm:h-60 md:w-80 lg:w-96 bg-transparent rounded-lg overflow-hidden group/card relative",
           className
         )}
       >
@@ -96,7 +94,7 @@ export const DirectionAwareHover = ({
             whileHover={direction}
             exit="exit"
           >
-            <motion.div className="group-hover/card:block hidden absolute inset-0 w-full h-full bg-black/40 z-10 transition duration-500" />
+            <motion.div className="group-hover/card:block hidden absolute inset-0 w-full h-full bg-black/40 z-10 transition duration-500 aspect-3/4" />
             <motion.div
               variants={variants}
               className="h-full w-full relative bg-gray-50 dark:bg-black"
@@ -108,7 +106,7 @@ export const DirectionAwareHover = ({
               <img
                 alt="image"
                 className={cn(
-                  "h-full w-full object-cover scale-[1.15]",
+                  "h-full w-full object-cover scale-[1.2] aspect-3/4",
                   imageClassName
                 )}
                 width="1000"

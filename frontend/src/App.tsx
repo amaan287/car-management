@@ -22,6 +22,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "./redux/store";
 import FooterCom from "./components/Footer";
 import Privacy from "./pages/terms&condition";
+import Socials from "./pages/Socials";
+import Story from "./pages/Story";
 
 function AppContent() {
   const location = useLocation();
@@ -51,6 +53,8 @@ function AppContent() {
           <Route path="/update-post/:postId" element={<UpdatePost />} />
         </Route>
         <Route path="/home" element={<HomePage />} />
+        <Route path="/story" element={<Story />} />
+        <Route path="/socials" element={<Socials />} />
         <Route path="/" element={<LandingPage />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/post/:postSlug" element={<PostPage />} />

@@ -4,8 +4,8 @@ import { BsFacebook, BsInstagram, BsTwitter, BsGithub } from "react-icons/bs";
 import { Link } from "react-router-dom";
 export default function FooterCom() {
   return (
-    <div className="border py-4 rounded-lg">
-      <div className="w-full max-w-7xl mx-auto">
+    <div className="border w-full px-2 py-2 rounded-lg bg-background ">
+      <div className="w-full px-2 py-2 max-w-7xl mx-auto">
         <div className="grid w-full justify-between sm:flex md:grid-cols-1">
           {/* <div className="mt-5">
             <Link
@@ -18,16 +18,25 @@ export default function FooterCom() {
               Blog
             </Link>
           </div> */}
-          <div className="grid grid-cols-2 gap-8 mt-4 sm:grid-cols-3 sm:gap-6">
+          <div className="grid grid-cols-2 gap-8 mt-4 py-2 sm:grid-cols-3 sm:gap-6">
             <div>
-              <Footer.Title title="Follow us" />
+              <Footer.Title title="Follow us" className="pb-2 " />
               <Footer.LinkGroup col>
                 <Link
                   to="https://www.github.com/amaan287"
                   target="_blank"
                   rel="noopener noreferrer"
+                  className=""
                 >
                   Github
+                </Link>
+                <Link
+                  to="https://www.facebook.com/priyansh.soni.12576"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className=""
+                >
+                  Facebook
                 </Link>
 
                 <Link to={"https://www.instagram.com/priyanshsoniii/"}>
@@ -36,7 +45,7 @@ export default function FooterCom() {
               </Footer.LinkGroup>
             </div>
             <div>
-              <Footer.Title title="Legal" />
+              <Footer.Title title="Legal" className="pb-2" />
               <Footer.LinkGroup col>
                 <Footer.Link
                   href="/privacy"
@@ -49,7 +58,7 @@ export default function FooterCom() {
             </div>
           </div>
         </div>
-        <Footer.Divider />
+        <Footer.Divider className="pb-2 my-2" />
         <div className="w-full sm:flex sm:items-center sm:justify-between">
           <Footer.Copyright
             href="/"
