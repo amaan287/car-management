@@ -62,7 +62,7 @@ export default function CustomPreloader() {
         <div className="bar w-[100vw] h-[100vh] bg-black"></div>
       </div>
       <div
-        className="daily-airs fixed inset-x-0 bottom-0 z-50 flex items-center justify-center text-white text-6xl font-bold"
+        className="daily-airs fixed inset-x-0 bottom-0 z-50  flex items-center text-2xl justify-center text-white md:text-6xl font-bold"
         style={{ transform: "translateY(100%)" }}
       >
         D A I L Y &nbsp; A I R S
