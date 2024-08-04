@@ -43,7 +43,7 @@ export default function FirstCard() {
                 </Button>
               </Link>
             </div>
-            <div className="bg-white  h-64 sm:h-80 w-1/2 md:w-1/3 lg:w-1/4 lg:h-[50vh] rounded-xl shadow-xl"></div>
+            <div className="bg-[url('../../images/pfp.jpg')] bg-cover bg-center h-64 sm:h-80 w-1/2 md:w-1/3 lg:w-1/4 lg:h-[50vh] rounded-xl shadow-xl"></div>
           </div>
         </div>
       </div>
