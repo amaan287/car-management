@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import PostCard from "@/components/PostCard";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import BlurFade from "@/components/magicui/blur-fade";
 
 interface Post {
   _id: string;
@@ -63,25 +64,33 @@ function AllPosts() {
             src={posts[0].image}
             alt={posts[0].title}
             className="lg:w-full lg:h-full h-[70%] w-[70%] max-w-sm rounded-xl shadow-2xl  mr-4"
-          />
+          />{" "}
           <div>
-            <h1 className="md:text-5xl text-2xl font-bold">{posts[0].title}</h1>
-            <div
-              className="py-3 max-w-2xl text-md mx-auto w-full post-content"
-              dangerouslySetInnerHTML={{
-                __html: posts[0].content.substring(0, 995) + "...read more",
-              }}
-            ></div>
-            {isNew && (
-              <p className="text-sm px-1 rounded-xl dark:text-gray-800 bg-yellow-300 w-fit mb-2">
-                NEW
-              </p>
-            )}
-            <Link to={`/post/${posts[0].slug}`}>
-              <Button className=" text-white bg-card hover:bg-card border-gray-900 dark:bg-secondary dark:text-gray-900  shadow-gray-500 hover:-translate-y-0.5 cursor-pointer transition-all mt-2">
-                Read more
-              </Button>
-            </Link>
+            <BlurFade delay={0.5} blur="10px" inView>
+              <h1 className="md:text-5xl text-xl font-bold mt-2 md:mt-0">
+                {posts[0].title}
+              </h1>
+            </BlurFade>
+            <BlurFade delay={0.5} blur="10px" inView>
+              <div
+                className="py-3 max-w-2xl text-md mx-auto w-full post-content"
+                dangerouslySetInnerHTML={{
+                  __html: posts[0].content.substring(0, 995) + "...read more",
+                }}
+              ></div>
+            </BlurFade>
+            <BlurFade delay={0.7} blur="10px" inView>
+              {isNew && (
+                <p className="text-sm px-1 rounded-xl dark:text-gray-800 bg-yellow-300 w-fit mb-2">
+                  NEW
+                </p>
+              )}
+              <Link to={`/post/${posts[0].slug}`}>
+                <Button className=" text-white bg-card hover:bg-card border-gray-900 dark:bg-secondary dark:text-gray-900  shadow-gray-500 hover:-translate-y-0.5 cursor-pointer transition-all mt-2">
+                  Read more
+                </Button>
+              </Link>
+            </BlurFade>
           </div>
         </div>
       </div>

@@ -3,6 +3,7 @@ import { Reviews } from "@/components/Reviews";
 import { ImageSlider } from "@/components/imageSlider";
 import FirstCard from "@/components/FirstCard";
 import { useEffect, useState } from "react";
+import BlurFade from "@/components/magicui/blur-fade";
 
 interface Post {
   _id: string;
@@ -40,8 +41,8 @@ export default function Home() {
 
   if (isLoading) {
     return (
-      <div className="w-[100vw] h-[100vh] flex items-center justify-center">
-        Loading...
+      <div className="w-[100vw] h-[100vh] flex items-center justify-center text-white">
+        loading...
       </div>
     );
   }
@@ -57,15 +58,21 @@ export default function Home() {
   return (
     <div>
       <div className="mt-2 flex flex-col items-center justify-start">
-        <FirstCard />
+        <BlurFade delay={0.5} blur="10px" inView>
+          <FirstCard />
+        </BlurFade>
       </div>
       {/* <div className="my-10 flex flex-col items-center justify-center">
         <OrbitingCirclesComp />
-      </div> */}
+        </div> */}
+
       <ImageSlider posts={posts} />
-      <div className="flex flex-col items-center justify-center">
-        <Reviews />
-      </div>
+
+      <BlurFade delay={0.3} blur="10px" inView>
+        <div className="flex flex-col items-center justify-center">
+          <Reviews />
+        </div>
+      </BlurFade>
     </div>
   );
 }

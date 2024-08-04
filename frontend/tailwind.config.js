@@ -68,6 +68,14 @@ export default defineConfig({
         sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
+        scalePreloader: {
+          "0%": {
+            transform: "scale-100",
+          },
+          "100%": {
+            transform: "scale-150",
+          },
+        },
         orbit: {
           "0%": {
             transform:
@@ -96,6 +104,7 @@ export default defineConfig({
         },
       },
       animation: {
+        scalePreloader: "scalePreloader calc(var(--duration)*1s) ease-in",
         orbit: "orbit calc(var(--duration)*1s) linear infinite",
         marquee: "marquee var(--duration) linear infinite",
         "marquee-vertical": "marquee-vertical var(--duration) linear infinite",

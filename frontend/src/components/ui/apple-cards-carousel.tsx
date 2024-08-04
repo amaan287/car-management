@@ -5,6 +5,7 @@ import React, {
   createContext,
   useContext,
   useCallback,
+  RefCallback,
 } from "react";
 import {
   IconArrowNarrowLeft,
@@ -39,6 +40,32 @@ export const CarouselContext = createContext<{
   onCardClose: () => {},
   currentIndex: 0,
 });
+export const useInView = (options = {}): [RefCallback<Element>, boolean] => {
+  const [ref, setRef] = useState<Element | null>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    if (!ref) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      setInView(entry.isIntersecting);
+    }, options);
+
+    observer.observe(ref);
+
+    return () => {
+      if (ref) {
+        observer.unobserve(ref);
+      }
+    };
+  }, [ref, options]);
+
+  const setRefCallback: RefCallback<Element> = (element) => {
+    setRef(element);
+  };
+
+  return [setRefCallback, inView];
+};
 
 export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
   const carouselRef = React.useRef<HTMLDivElement>(null);
@@ -129,7 +156,7 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
                   },
                 }}
                 key={"card" + index}
-                className="last:pr-[5%] md:last:pr-[33%]  rounded-3xl"
+                className="last:pr-[5%] md:last:pr-[33%] rounded-3xl"
               >
                 {item}
               </motion.div>
@@ -193,7 +220,7 @@ export const Card = ({
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const { onCardClose } = useContext(CarouselContext);
-
+  const [setRef, inView] = useInView({ threshold: 0.1 });
   const handleClose = useCallback(() => {
     setOpen(false);
     onCardClose(index);
@@ -264,9 +291,13 @@ export const Card = ({
         )}
       </AnimatePresence>
       <motion.button
+        ref={setRef}
         layoutId={layout ? `card-${card.title}` : undefined}
         onClick={handleOpen}
-        className="rounded-3xl bg-gray-100 dark:bg-neutral-900 w-56 md:w-96 overflow-hidden flex flex-col items-start  justify-start relative z-10 aspect-[3/4] "
+        className="rounded-3xl bg-gray-100 dark:bg-neutral-900 w-56 md:w-96 overflow-hidden flex flex-col items-start justify-start relative z-10 aspect-[3/4]"
+        initial={{ opacity: 0, y: 50 }}
+        animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+        transition={{ duration: 0.5, delay: index * 0.1 }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-transparent z-30 pointer-events-none" />
         <div className="relative z-40 p-8">

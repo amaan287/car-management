@@ -88,7 +88,7 @@ function Header() {
         <div className="flex gap-5 items-center justify-center">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <h1 className=" cursor-pointer font-semibold border px-2 py-1 rounded-lg">
+              <h1 className=" cursor-pointer text-sm sm:text-md font-semibold border px-2 py-1 rounded-lg">
                 Community
               </h1>
             </DropdownMenuTrigger>
@@ -114,9 +114,10 @@ function Header() {
             <div className="flex gap-4">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <h1 className=" cursor-pointer">
+                  <h1 className="scale-75 sm:scale-125 cursor-pointer">
                     <Avatar
                       alt="user"
+                      // size={icons}
                       img={currentUser?.profilePicture}
                       rounded
                     />

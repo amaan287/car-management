@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import Marquee from "@/components/magicui/marquee";
+import BlurFade from "./magicui/blur-fade";
 const reviews = [
   {
     name: "Shivangi Chaudhary",
@@ -87,12 +88,20 @@ const ReviewCard = ({
 export function Reviews() {
   return (
     <div className="relative flex h-[500px] w-[100vw] flex-col items-center justify-center overflow-hidden rounded-xl border bg-background md:shadow-2xl">
-      <h1 className="text-4xl font-bold mb-4">Reviews and comments</h1>
-      <Marquee pauseOnHover className="[--duration:20s]" key={""}>
-        {firstRow.map((review) => (
-          <ReviewCard key={review.username} {...review} />
-        ))}
-      </Marquee>
+      <BlurFade delay={0.7} blur="10px" inView>
+        <h1 className="md:text-4xl text-2xl font-bold mb-4 mx-auto">
+          Reviews and comments
+        </h1>
+      </BlurFade>
+      <BlurFade delay={0.5} blur="10px" inView>
+        <div>
+          <Marquee pauseOnHover className="[--duration:20s]" key={""}>
+            {firstRow.map((review) => (
+              <ReviewCard key={review.username} {...review} />
+            ))}
+          </Marquee>
+        </div>
+      </BlurFade>
       <Marquee reverse pauseOnHover className="[--duration:20s]" key={""}>
         {secondRow.map((review) => (
           <ReviewCard key={review.username} {...review} />
