@@ -1,6 +1,6 @@
 import { Footer } from "flowbite-react";
 // import { Link } from "react-router-dom";
-import { BsFacebook, BsInstagram, BsTwitter, BsGithub } from "react-icons/bs";
+import { BsFacebook, BsInstagram, BsGithub, BsYoutube } from "react-icons/bs";
 import { Link } from "react-router-dom";
 export default function FooterCom() {
   return (
@@ -42,6 +42,12 @@ export default function FooterCom() {
                 <Link to={"https://www.instagram.com/priyanshsoniii/"}>
                   Instagram
                 </Link>
+
+                <Link
+                  to={"https://youtube.com/@priyanshsoniii?si=ixnJZJAczAKWnYgi"}
+                >
+                  Youtube
+                </Link>
               </Footer.LinkGroup>
             </div>
             <div>
@@ -66,12 +72,18 @@ export default function FooterCom() {
             year={new Date().getFullYear()}
           />
           <div className="flex gap-6 sm:mt-0 mt-4 sm:justify-center">
-            <Footer.Icon href="#" icon={BsFacebook} />
+            <Footer.Icon
+              href="https://www.facebook.com/priyansh.soni.12576"
+              icon={BsFacebook}
+            />
             <Footer.Icon
               href="https://www.instagram.com/priyanshsoniii/"
               icon={BsInstagram}
             />
-            <Footer.Icon href="#" icon={BsTwitter} />
+            <Footer.Icon
+              href="https://youtube.com/@priyanshsoniii?si=ixnJZJAczAKWnYgi"
+              icon={BsYoutube}
+            />
             <Footer.Icon href={"https://github.com/amaan287"} icon={BsGithub} />
           </div>
         </div>
