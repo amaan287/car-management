@@ -13,10 +13,12 @@ interface Post {
 
 interface ImageSliderProps {
   posts: Post[];
+  category: string;
+  heading: string;
 }
 
-export function ImageSlider({ posts }: ImageSliderProps) {
-  const cards = posts.map((post, index) => {
+export function ImageSlider({ posts, category, heading }: ImageSliderProps) {
+  const cards = posts.slice(0, 5).map((post, index) => {
     const cardData = {
       src: post.image,
       title: post.title,
@@ -45,8 +47,9 @@ export function ImageSlider({ posts }: ImageSliderProps) {
 
   return (
     <div className="w-full h-full py-20">
-      <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-800 dark:text-neutral-200 font-sans">
-        Discover Artistic Wonders
+      <h2 className="max-w-7xl pl-4 flex flex-col mx-auto text-xl md:text-5xl font-bold text-neutral-800 dark:text-neutral-200 font-sans">
+        {heading}
+        <span className="text-white badge mt-2">{category}</span>
       </h2>
       <Carousel items={cards} />
     </div>

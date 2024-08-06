@@ -1,5 +1,4 @@
 import { Mail } from "lucide-react";
-import { DockD } from "./Dock";
 import OrbitingCircles from "./magicui/orbiting-circles";
 
 export function OrbitingCirclesComp() {
@@ -47,7 +46,6 @@ export function OrbitingCirclesComp() {
           <Mail />
         </OrbitingCircles>
       </div>
-      <DockD />
     </div>
   );
 }

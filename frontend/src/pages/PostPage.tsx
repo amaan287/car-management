@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { Spinner } from "flowbite-react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { TracingBeam } from "@/components/ui/tracing-beam";
-import { Button } from "@/components/ui/button";
 import { DirectionAwareHover } from "@/components/ui/direction-aware-hover";
 import CommentSection from "@/components/CommentSection";
 interface Post {
@@ -22,7 +21,17 @@ export default function PostPage(): JSX.Element {
   const [post, setPost] = useState<Post | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
   const [errors, setErrors] = useState<string | null>(null);
+  const filteredPosts = posts.filter((p) => p._id !== post?._id);
+  const postsToDisplay = filteredPosts.slice(0, 4);
+  function ScrollToTop() {
+    const { pathname } = useLocation();
 
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [pathname]);
+
+    return null;
+  }
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -95,24 +104,27 @@ export default function PostPage(): JSX.Element {
   }
   return (
     <main className="px-3 pt-3 pb-[8rem] flex flex-col max-w-6xl mx-auto min-h-screen">
+      <ScrollToTop />
       <TracingBeam className="px-6">
         <h1 className="text-3xl mt-10 p-3 text-center font-serif max-w-2xl mx-auto lg:text-4xl">
           {post && post.title}
         </h1>
-        <Link
-          to={`/search?category=${post && post.category}`}
-          className="self-center mt-5  "
-        >
-          <Button className=" rounded-full text-text bg-background">
-            {post && post.category}
-          </Button>
-        </Link>
+        <div className="w-fit mx-auto">
+          <Link
+            to={`/search?category=${post && post.category}`}
+            className="self-center mt-5  "
+          >
+            <div className="badge rounded-full text-text bg-background">
+              {post && post.category}
+            </div>
+          </Link>
+        </div>
         <Link to={post?.image ?? ""} target="_blank" rel="noopener noreferrer">
-          <div className="w-full flex pt-10  justify-center">
+          <div className="w-full flex pt-10  justify-center  ">
             <img
               src={post?.image ?? ""}
               alt={post?.title ?? ""}
-              className="p-3 h-[60%] w-[60%] md:h-[40%] md:w-[40%]  object-cover"
+              className="p-3 h-[60%] w-[60%] md:h-[40%] md:w-[40%] rounded-xl  object-cover"
             />
           </div>
         </Link>
@@ -136,7 +148,7 @@ export default function PostPage(): JSX.Element {
         </div>
         <div className="h-full w-fit relative mt-5 grid sm:grid-cols-2 grid-cols-1 mx-auto">
           {posts &&
-            posts.slice(1, 5).map((post) => (
+            postsToDisplay.map((post) => (
               <div className="p-2 col-span-1">
                 <DirectionAwareHover imageUrl={post.image} post={post}>
                   <p className="font-bold text-xl">{post.title}</p>
@@ -147,13 +159,10 @@ export default function PostPage(): JSX.Element {
               </div>
             ))}
         </div>
+        <div className="mx-auto w-fit">
+          <Link to={"/all-posts"}>view all</Link>
+        </div>
       </TracingBeam>
-      <Link
-        to={"/all-posts"}
-        className="mx-auto text-2xl font-bold border px-4 py-2 mt-4 rounded-xl shadow-xl"
-      >
-        <h1>View all</h1>
-      </Link>
     </main>
   );
 }

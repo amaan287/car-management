@@ -22,24 +22,34 @@ export default function PostCard({ post }: PostCardProps) {
       // "read more"
     );
   };
+  const truncateHeading = (title: string, maxLength: number) => {
+    if (title.length <= maxLength) return title;
+    return (
+      title.substring(0, title.lastIndexOf(" ", maxLength)) + "  ...."
+      // +
+      // "read more"
+    );
+  };
 
   return (
     <BlurFade delay={0.25} blur="10px" inView>
-      <div className=" dark:bg-card bg-slate-gray-100 group py-2 relative w-full border  h-[600px] overflow-hidden rounded-2xl sm:w-[430px] transition-all shadow-xl px-5">
+      <div className=" dark:bg-card bg-slate-gray-100 group py-2 relative w-full border  h-[600px] overflow-hidden rounded-2xl sm:w-[410px] transition-all shadow-xl px-2">
         <BlurFade delay={0.35} blur="10px" inView>
           <Link to={`/post/${post.slug}`}>
             <img
               src={post.image}
               alt="post cover"
-              className="md:h-[520px] md:w-[400px] h-[400px] mx-auto rounded-xl object-cover group-hover:h-[350px] transition-all duration-300 z-20"
+              className="md:h-[520px] md:w-[400px] h-[400px] mx-auto rounded-xl object-cover md:group-hover:h-[350px] transition-all duration-300 z-20"
             />
           </Link>
         </BlurFade>
 
         <div className="py-3 flex flex-col gap-2">
           <BlurFade delay={0.35} blur="10px" inView>
-            <div className="flex justify-between items-center">
-              <p className="text-lg font-semibold line-clamp-2">{post.title}</p>
+            <div className="flex justify-between items-center px-4">
+              <p className="text-lg font-semibold line-clamp-2">
+                {truncateHeading(post.title, 25)}
+              </p>
 
               <p className="italic w-fit bg-background dark:bg-gray-950  text-text border rounded-xl text-xs self-center px-2 pb-1">
                 {post.category}
@@ -47,7 +57,7 @@ export default function PostCard({ post }: PostCardProps) {
             </div>
           </BlurFade>
           <BlurFade delay={0.35} blur="10px" inView>
-            <div className="px-2 text-sm md:mt-10 mt-2   text-balance text-center">
+            <div className="px-2 text-sm md:mt-7 mt-2   text-balance text-center">
               {truncateContent(post.content, 200)}
             </div>{" "}
           </BlurFade>

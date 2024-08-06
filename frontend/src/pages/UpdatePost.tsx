@@ -16,7 +16,6 @@ import { RootState } from "../redux/store";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Alert } from "@/components/ui/alert";
-import { FileInput } from "flowbite-react";
 import {
   Select,
   SelectContent,
@@ -174,13 +173,18 @@ export default function UpdatePost() {
                     Acrylic Portrait
                   </SelectItem>
                   <SelectItem value="landscape">Landscape</SelectItem>
+                  <SelectItem value="commission art">Commission art</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
           </div>
         </div>
-        <div className="flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3">
-          <FileInput onChange={(e) => setFile(e.target.files?.[0] || null)} />
+        <div className="flex gap-4 items-center justify-between  p-3">
+          <Input
+            type="file"
+            id="image"
+            onChange={(e) => setFile(e.target.files?.[0] || null)}
+          />
           <Button
             type="button"
             size="sm"

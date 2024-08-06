@@ -81,9 +81,9 @@ export default function DashPosts() {
       );
       const data = await res.json();
       if (!res.ok) {
-        alert("post deleted");
         console.log(data.message);
       } else {
+        alert("post deleted");
         setUserPosts((prev) =>
           prev.filter((post) => post._id !== postIdToDelete)
         );

@@ -13,29 +13,37 @@ import PrivateRoute from "./components/PrivateRoute";
 import CreatePost from "./pages/CreatePost";
 import OnlyAdminPrivateRoute from "./components/OnlyAdminPrivateRoute";
 import PostPage from "./pages/PostPage";
-import Search from "./components/Search";
 import UpdatePost from "./pages/UpdatePost";
 import { ThemeProvider } from "./components/theme-provider";
-import AllPosts from "./pages/AllPosts";
-import LandingPage from "./pages/LandingPage";
 import { useSelector } from "react-redux";
 import { RootState } from "./redux/store";
 import FooterCom from "./components/Footer";
 import Privacy from "./pages/terms&condition";
 import Socials from "./pages/Socials";
 import Story from "./pages/Story";
+import { useEffect } from "react";
+import AllPosts from "./pages/AllPosts";
 
 function AppContent() {
   const location = useLocation();
   const showHeader = location.pathname !== "/dashboard";
-  const showHeader1 = location.pathname !== "/";
   const showHeader2 = location.pathname !== "/sign-up";
   const showHeader3 = location.pathname !== "/sign-in";
   const showHeader4 = location.pathname !== "/privacy";
   const { currentUser } = useSelector((state: RootState) => state.user);
+  function ScrollToTop() {
+    const { pathname } = useLocation();
+
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [pathname]);
+
+    return null;
+  }
   return (
     <div className="dark:bg-black h-full">
-      {showHeader1 && showHeader && <Header />}
+      {showHeader && <Header />}
+      <ScrollToTop />
       <Routes>
         {!currentUser && (
           <>
@@ -43,7 +51,6 @@ function AppContent() {
             <Route path="/sign-in" element={<SignIn />} />
           </>
         )}
-        <Route path="/search" element={<Search />} />
         <Route path="/all-posts" element={<AllPosts />} />
         <Route element={<PrivateRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />
@@ -52,18 +59,14 @@ function AppContent() {
           <Route path="/create-post" element={<CreatePost />} />
           <Route path="/update-post/:postId" element={<UpdatePost />} />
         </Route>
-        <Route path="/home" element={<HomePage />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/story" element={<Story />} />
         <Route path="/socials" element={<Socials />} />
-        <Route path="/" element={<LandingPage />} />
+
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/post/:postSlug" element={<PostPage />} />
       </Routes>
-      {showHeader1 &&
-        showHeader &&
-        showHeader2 &&
-        showHeader3 &&
-        showHeader4 && <FooterCom />}
+      {showHeader && showHeader2 && showHeader3 && showHeader4 && <FooterCom />}
     </div>
   );
 }

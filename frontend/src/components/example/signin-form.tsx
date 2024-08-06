@@ -60,7 +60,7 @@ export default function SignInForm() {
       const data = await res.json();
       if (res.ok) {
         dispatch(signInSuccess(data));
-        navigate("/home");
+        navigate("/");
       } else {
         dispatch(signInFailure(data.message || "Sign in failed"));
       }
@@ -108,7 +108,7 @@ export default function SignInForm() {
         return dispatch(signInFailure(data.message || "Sign in failed"));
       }
       dispatch(signInSuccess(data));
-      navigate("/home");
+      navigate("/");
     } catch (error) {
       dispatch(signInFailure((error as Error).message));
     }

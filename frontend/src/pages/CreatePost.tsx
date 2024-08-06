@@ -38,7 +38,9 @@ export default function CreatePost(): JSX.Element {
     null
   );
   const [imageUploadError, setImageUploadError] = useState<string | null>(null);
-  const [formData, setFormData] = useState<FormData>({});
+  const [formData, setFormData] = useState<FormData>({
+    category: "uncategorised", // Add this line
+  });
   const [publishError, setPublishError] = useState<string | null>(null);
 
   const navigate = useNavigate();
@@ -83,6 +85,15 @@ export default function CreatePost(): JSX.Element {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
+    if (
+      !formData.title ||
+      !formData.category ||
+      !formData.image ||
+      !formData.content
+    ) {
+      setPublishError("Please fill in all fields");
+      return;
+    }
     try {
       const res = await fetch("/api/post/create", {
         method: "POST",
@@ -126,6 +137,7 @@ export default function CreatePost(): JSX.Element {
               onValueChange={(value) =>
                 setFormData({ ...formData, category: value })
               }
+              value={formData.category} // Add this line
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select a category" />
@@ -133,6 +145,7 @@ export default function CreatePost(): JSX.Element {
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Category</SelectLabel>
+                  <SelectItem value="uncategorised">uncategorised</SelectItem>
                   <SelectItem value="plein air">Plein air</SelectItem>
                   <SelectItem value="pencil sketch">Pencil Sketch</SelectItem>
                   <SelectItem value="pencil portrait">
@@ -142,6 +155,7 @@ export default function CreatePost(): JSX.Element {
                     Acrylic Portrait
                   </SelectItem>
                   <SelectItem value="landscape">Landscape</SelectItem>
+                  <SelectItem value="commission art">Commission art</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -157,6 +171,7 @@ export default function CreatePost(): JSX.Element {
             }
           />
           <Button
+            type="button" // Add this line
             size="sm"
             onClick={handleUpdloadImage}
             disabled={!!imageUploadProgress}
