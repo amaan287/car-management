@@ -115,6 +115,7 @@ export default defineConfig({
 		},
 	},
 	plugins: [
+		require('@tailwindcss/typography'),
 		addVariablesForColors,
 		daisyui,
 		tailwindcssAnimate,

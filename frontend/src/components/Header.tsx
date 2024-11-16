@@ -14,7 +14,6 @@ import {
 } from "./ui/dropdown-menu";
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { Button } from "./ui/button";
-import { ModeToggle } from "./mode-toggle";
 
 import { motion } from "framer-motion";
 function Header() {
@@ -50,31 +49,18 @@ function Header() {
             animate={{ opacity: 1 }}
             className="font-medium text-black dark:text-white whitespace-pre"
           >
-            Daily airs
+            CM
           </motion.span>
         </Link>
 
         <div className="flex gap-5 items-center justify-center">
-          {/* <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <h1 className=" cursor-pointer  text-xs md:text-md font-semibold border px-2 py-1 rounded-lg">
-                Community
-              </h1>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56 py-4">
-              <Link to={"/story"}>
-                <DropdownMenuCheckboxItem>My story</DropdownMenuCheckboxItem>
-              </Link>
-              <Link to={"/socials"}>
-                <DropdownMenuCheckboxItem>Socials</DropdownMenuCheckboxItem>
-              </Link>
-              <Link to={"/dashboard?tab=profile"}>
-                <DropdownMenuCheckboxItem>Join now</DropdownMenuCheckboxItem>
-              </Link>
-            </DropdownMenuContent>
-          </DropdownMenu> */}
-          <ModeToggle />
-
+          {currentUser ? (
+            <Link to={"/create-Car"}>
+              <Button className="bg-white text-gray-800 hover:bg-gray-200 hover:text-600">
+                Create Post
+              </Button>
+            </Link>
+          ) : null}
           {currentUser ? (
             <div className="flex gap-4">
               <DropdownMenu>
@@ -98,13 +84,7 @@ function Header() {
                     </span>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  {currentUser.isAdmin && (
-                    <Link to={"/dashboard?tab=profile"}>
-                      <DropdownMenuCheckboxItem>
-                        Profile
-                      </DropdownMenuCheckboxItem>
-                    </Link>
-                  )}
+
                   <DropdownMenuCheckboxItem onClick={handleSignout}>
                     Signout
                   </DropdownMenuCheckboxItem>
@@ -114,7 +94,9 @@ function Header() {
           ) : (
             <div>
               <Link to={"/sign-in"}>
-                <Button color={"black"}>SignIn</Button>
+                <Button className="bg-white text-gray-800 hover:bg-gray-200 hover:text-600">
+                  SignIn
+                </Button>
               </Link>
             </div>
           )}

@@ -19,7 +19,7 @@ import {
   SelectItem,
 } from "../components/ui/select";
 
-interface FormData {
+interface Car {
   _id?: string;
   title?: string;
   description?: string;
@@ -42,7 +42,7 @@ export default function UpdatePost() {
     null
   );
   const [imageUploadError, setImageUploadError] = useState<string | null>(null);
-  const [formData, setFormData] = useState<FormData>({
+  const [Car, setCar] = useState<Car>({
     title: "",
     images: [],
     description: "",
@@ -58,51 +58,65 @@ export default function UpdatePost() {
     },
   });
   const [publishError, setPublishError] = useState<string | null>(null);
-  const { carId } = useParams<{ carId: string }>();
+  const { CarId } = useParams<{ CarId: string }>();
   const [quillContent, setQuillContent] = useState("");
 
   const navigate = useNavigate();
   const { currentUser } = useSelector((state: RootState) => state.user);
-  console.log("carId", carId);
+  console.log("carId", CarId);
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await fetch(`/api/car/getCars?carId=${carId}`);
+        const res = await fetch(`/api/car/getCars?carId=${CarId}`, {
+          method: "GET",
+        });
         const data = await res.json();
-
-        // Log the complete response to inspect the structure
         console.log("API Response:", data);
 
         if (!res.ok) {
-          console.log(data.message);
           setPublishError(data.message);
           return;
         }
 
-        // Check if data exists and has the correct structure
-        if (!data || (!data.posts && !data.car)) {
-          setPublishError("No data found");
+        // Access the first car from the cars array
+        const carData = data.cars?.[0];
+
+        if (!carData) {
+          setPublishError("No car data found");
           return;
         }
 
-        // Handle different possible response structures
-        const postData = data.posts?.[0] || data.car || data;
+        // Set all form values
+        setCar({
+          _id: carData._id,
+          title: carData.title || "",
+          description: carData.description || "",
+          tags: {
+            car_type: carData.tags?.car_type || "",
+            company: carData.tags?.company || "",
+            status: carData.status || "", // Note: status appears to be at root level
+          },
+          specifications: {
+            year: carData.specifications?.year || 0,
+            fuelType: carData.specifications?.fuelType || "",
+            transmission: carData.specifications?.transmission || "",
+          },
+          images: carData.images || [],
+        });
 
-        console.log("Post Data:", postData);
-
-        setPublishError(null);
-        setFormData(postData);
-        setQuillContent(postData.description || "");
+        // Set the quill editor content
+        setQuillContent(carData.description || "");
       } catch (error) {
-        console.log((error as Error).message);
+        console.error("Error fetching post:", error);
         setPublishError("Error fetching post data");
       }
     };
 
-    if (carId) {
+    if (CarId) {
       fetchPost();
     }
-  }, [carId]);
+  }, [CarId]);
+
   const handleUploadImage = async () => {
     try {
       if (!file) {
@@ -132,11 +146,11 @@ export default function UpdatePost() {
 
       setImageUploadProgress(null);
       setImageUploadError(null);
-      setFormData({
-        ...formData,
+      setCar({
+        ...Car,
         images: [
-          ...formData.images,
-          { url: imageData.secure_url, alt: formData.title || "car image" },
+          ...Car.images,
+          { url: imageData.secure_url, alt: Car.title || "car image" },
         ],
       });
     } catch (error) {
@@ -150,13 +164,13 @@ export default function UpdatePost() {
     e.preventDefault();
     try {
       const res = await fetch(
-        `/api/car/updatecar/${formData._id}/${currentUser?._id}`,
+        `/api/car/updatecar/${Car._id}/${currentUser?._id}`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(Car),
         }
       );
       const data = await res.json();
@@ -184,9 +198,9 @@ export default function UpdatePost() {
           required
           id="title"
           className="flex-1"
-          value={formData.title || ""}
+          value={Car.title || ""}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setFormData({ ...formData, title: e.target.value })
+            setCar({ ...Car, title: e.target.value })
           }
         />
         <ReactQuill
@@ -196,7 +210,7 @@ export default function UpdatePost() {
           value={quillContent}
           onChange={(value: string) => {
             setQuillContent(value);
-            setFormData({ ...formData, description: value });
+            setCar({ ...Car, description: value });
           }}
         />
 
@@ -226,7 +240,7 @@ export default function UpdatePost() {
           </Button>
         </div>
         {imageUploadError && <Alert color="failure">{imageUploadError}</Alert>}
-        {formData.images.map((image, index) => (
+        {Car.images.map((image, index) => (
           <img
             key={index}
             src={image.url}
@@ -237,9 +251,9 @@ export default function UpdatePost() {
         <Input
           type="number"
           placeholder="Year"
-          value={formData.specifications?.year || ""}
+          value={Car.specifications?.year || ""}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setFormData((prev) => ({
+            setCar((prev) => ({
               ...prev,
               specifications: {
                 ...prev.specifications,
@@ -251,9 +265,9 @@ export default function UpdatePost() {
         <Input
           type="text"
           placeholder="Company"
-          value={formData.tags?.company || ""}
+          value={Car.tags?.company || ""}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setFormData((prev) => ({
+            setCar((prev) => ({
               ...prev,
               tags: {
                 ...prev.tags,
@@ -263,9 +277,9 @@ export default function UpdatePost() {
           }
         />
         <Select
-          value={formData.tags?.car_type}
+          value={Car.tags?.car_type}
           onValueChange={(value) =>
-            setFormData((prev) => ({
+            setCar((prev) => ({
               ...prev,
               tags: { ...prev.tags, car_type: value },
             }))
@@ -288,9 +302,9 @@ export default function UpdatePost() {
           </SelectContent>
         </Select>
         <Select
-          value={formData.tags?.status}
+          value={Car.tags?.status}
           onValueChange={(value) =>
-            setFormData((prev) => ({
+            setCar((prev) => ({
               ...prev,
               tags: { ...prev.tags, status: value },
             }))
@@ -311,9 +325,9 @@ export default function UpdatePost() {
         </Select>
 
         <Select
-          value={formData.specifications?.fuelType}
+          value={Car.specifications?.fuelType}
           onValueChange={(value) =>
-            setFormData((prev) => ({
+            setCar((prev) => ({
               ...prev,
               specifications: { ...prev.specifications, fuelType: value },
             }))
@@ -334,9 +348,9 @@ export default function UpdatePost() {
           </SelectContent>
         </Select>
         <Select
-          value={formData.specifications?.transmission}
+          value={Car.specifications?.transmission}
           onValueChange={(value) =>
-            setFormData((prev) => ({
+            setCar((prev) => ({
               ...prev,
               specifications: { ...prev.specifications, transmission: value },
             }))
