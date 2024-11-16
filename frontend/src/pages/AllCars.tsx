@@ -79,8 +79,8 @@ export default function AllCars() {
   }
 
   return (
-    <div>
-      <div className="mt-5 h-full pb-2 min-h-screen ">
+    <div className="min-h-screen">
+      <div className="mt-5 h-full pb-2  ">
         <div className="flex lg:flex-row flex-col gap-2 lg:gap-5 px-10 justify-end lg:justify-between w-full lg:items-center">
           <div className="flex gap-2 w-full items-center justify-end lg:justify-center">
             <label className="text-sm font-semibold lg:hidden">Search:</label>
