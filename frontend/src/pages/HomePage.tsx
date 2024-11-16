@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import BlurFade from "../components/magicui/blur-fade";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { Button } from "../components/ui/button";
 interface Post {
   _id: string;
   slug: string;
@@ -59,6 +60,9 @@ export default function Home() {
             <h1 className="text-4xl font-bold text-gray-100">Car Management</h1>
             <p className="text-lg text-gray-300">
               Welcome to the Car Management System
+              <Link to="/allCars">
+                <Button>Manage all your car</Button>
+              </Link>
             </p>
           </div>
         </BlurFade>

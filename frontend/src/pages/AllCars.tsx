@@ -69,21 +69,21 @@ export default function AllCars() {
     }
   };
 
-  // useEffect(() => {
-  //   fetchCars();
-  // }, [currentPage, selectedCategory]);
+  useEffect(() => {
+    fetchCars();
+  }, [currentPage, selectedCategory]);
 
-  // useEffect(() => {
-  //   setCurrentPage(1);
-  // }, [searchTerm, selectedCategory]);
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, selectedCategory]);
 
-  // if (isLoading) {
-  //   return (
-  //     <div className="w-full h-screen flex items-center justify-center">
-  //       Loading...
-  //     </div>
-  //   );
-  // }
+  if (isLoading) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
 
   if (error) {
     return <div className="text-center p-4">Error: {error}</div>;
@@ -91,7 +91,6 @@ export default function AllCars() {
 
   return (
     <div>
-      Hello
       <div className="mt-5 h-full pb-2">
         <div className="flex lg:flex-row flex-col gap-2 lg:gap-5 px-10 justify-end lg:justify-between w-full lg:items-center">
           <div className="flex gap-2 w-full items-center justify-end lg:justify-start">
@@ -180,47 +179,34 @@ export default function AllCars() {
           </div>
         </div>
       }
+      {/* Car Grid */}
+      {
+        <div className="my-10 grid w-fit mx-auto grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5 px-4">
+          {cars.slice(1).map((car) => (
+            <CarCard key={car._id} Car={car} />
+          ))}
+        </div>
+      }
+      {/* Pagination */}
+      <div className="flex justify-center mt-5 gap-4">
+        <Button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </Button>
+        <span className="flex items-center">
+          Page {currentPage} of {totalPages}
+        </span>
+        <Button
+          onClick={() =>
+            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+          }
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </Button>
+      </div>
     </div>
   );
-  {
-    /* Car Grid */
-  }
-  {
-    /* <div className="my-10 grid w-fit mx-auto grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5 px-4">
-            {cars.slice(1).map((car) => (
-              <CarCard key={car._id} Car={car} />
-            ))}
-          </div> */
-  }
-  {
-    /* Pagination */
-  }
-  {
-    /* <div className="flex justify-center mt-5 gap-4">
-            <Button
-              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
-            >
-              Previous
-            </Button>
-            <span className="flex items-center">
-              Page {currentPage} of {totalPages}
-            </span>
-            <Button
-              onClick={() =>
-                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-              }
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </Button>
-          </div>
-        </>
-      )} */
-  }
-  //{" "}
-  // </div>
-  // );
-  //   );
-  // }
 }

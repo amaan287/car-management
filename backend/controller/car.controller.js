@@ -31,27 +31,62 @@ export const getCars = async (req, res, next) => {
     const limit = parseInt(req.query.limit) || 25;
     const startIndex = (page - 1) * limit;
 
-    const cars = await Car.find({
-      ...(req.query.userId && { userId: req.query.userId }),
-      ...(req.query.car_type && { "tags.car_type": req.query.car_type }),
-      ...(req.query.slug && { slug: req.query.slug }),
-      ...(req.query.carId && { _id: req.query.carId }),
-      ...(req.query.searchTerm && {
-        $or: [
-          { title: { $regex: req.query.searchTerm, $options: "i" } },
-          { description: { $regex: req.query.searchTerm, $options: "i" } },
-          { "tags.company": { $regex: req.query.searchTerm, $options: "i" } },
-          { "specifications.transmission": { $regex: req.query.searchTerm, $options: "i" } },
-          { "specifications.fuelType": { $regex: req.query.searchTerm, $options: "i" } },
-          { "specifications.year": { $regex: req.query.searchTerm, $options: "i" } },
-        ],
-      }),
-    })
+    // Log the query parameters
+    console.log('Query Parameters:', {
+      userId: req.query.userId,
+      car_type: req.query.car_type,
+      slug: req.query.slug,
+      carId: req.query.carId,
+      searchTerm: req.query.searchTerm,
+      page,
+      limit
+    });
+
+    // Build query object step by step
+    let query = {};
+
+    if (req.query.userId) {
+      query.userId = req.query.userId;
+    }
+
+    if (req.query.car_type) {
+      query['tags.car_type'] = req.query.car_type;
+    }
+
+    if (req.query.slug) {
+      query.slug = req.query.slug;
+    }
+
+    if (req.query.carId) {
+      query._id = req.query.carId;
+    }
+
+    if (req.query.searchTerm) {
+      query.$or = [
+        { title: { $regex: req.query.searchTerm, $options: "i" } },
+        { description: { $regex: req.query.searchTerm, $options: "i" } },
+        { "tags.company": { $regex: req.query.searchTerm, $options: "i" } },
+        { "specifications.transmission": { $regex: req.query.searchTerm, $options: "i" } },
+        { "specifications.fuelType": { $regex: req.query.searchTerm, $options: "i" } },
+        { "specifications.year": { $regex: req.query.searchTerm, $options: "i" } },
+      ];
+    }
+
+    // Log the final query
+    console.log('MongoDB Query:', JSON.stringify(query, null, 2));
+
+    // Execute query and log results
+    const cars = await Car.find(query)
       .sort({ updatedAt: -1 })
       .skip(startIndex)
       .limit(limit);
 
-    const totalCars = await Car.countDocuments();
+    console.log(`Found ${cars.length} cars`);
+
+    // Get total count without pagination
+    const totalCars = await Car.countDocuments(query);
+    console.log(`Total cars in database: ${totalCars}`);
+
     res.status(200).json({
       cars,
       totalCars,
@@ -59,9 +94,11 @@ export const getCars = async (req, res, next) => {
       totalPages: Math.ceil(totalCars / limit),
     });
   } catch (error) {
+    console.error('Error in getCars:', error);
     next(error);
   }
 };
+
 
 // Delete Car
 export const deleteCar = async (req, res, next) => {

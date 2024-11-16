@@ -31,6 +31,8 @@ interface FormData {
     transmission?: string;
   };
   images: Array<{ url: string; alt: string }>;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export default function CreateCar(): JSX.Element {
