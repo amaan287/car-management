@@ -3,7 +3,6 @@ import { Spinner } from "flowbite-react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { TracingBeam } from "@/components/ui/tracing-beam";
 import { DirectionAwareHover } from "@/components/ui/direction-aware-hover";
-import CommentSection from "@/components/CommentSection";
 interface Post {
   _id: string;
   title: string;
@@ -139,7 +138,6 @@ export default function PostPage(): JSX.Element {
           dangerouslySetInnerHTML={{ __html: post ? post.content : "" }}
         ></div>
         <div className="max-w-4xl mx-auto w-full"></div>
-        <CommentSection postId={post?._id ?? ""} />
 
         <div className="flex items-center justify-center">
           <h1 className="mx-auto ">

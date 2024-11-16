@@ -9,7 +9,6 @@ export default function FirstCard() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-gray-gray-100 to-transparent z-20"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent z-20"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent z-20"></div>
-        {/* <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent z-20"></div> */}
       </div>
 
       <div className="relative h-full w-full z-30 p-4 sm:p-6 md:p-8 lg:p-10">
@@ -49,7 +48,7 @@ export default function FirstCard() {
                 </p>
               </BlurFade>
               <BlurFade delay={3.75} blur="10px" inView>
-                <Link to={"/all-posts"} className="mt-2 inline-block">
+                <Link to={"/"} className="mt-2 inline-block">
                   <Button className=" border hover:border-none shadow-xl text-gray-700 bg-gradient-to-r from-yellow-50 to-orange-50 hover:shadow-md hover:shadow-yellow-50 hover:bg-yellow-50 transition-all font-medium   ">
                     Browse collections
                   </Button>
@@ -57,7 +56,7 @@ export default function FirstCard() {
               </BlurFade>
             </div>
 
-            <div className="bg-[url('../../images/pfp.jpg')] bg-cover bg-center h-64 sm:h-80 w-1/2 md:w-1/3 lg:w-1/4 lg:h-[50vh] rounded-xl shadow-xl"></div>
+            <div className=" "></div>
           </div>
         </div>
       </div>

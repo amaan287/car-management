@@ -1,19 +1,16 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { Label } from "../ui/label";
 import { Input as BaseInput } from "../ui/input";
-import { cn } from "@/lib/utils";
-import { FcGoogle } from "react-icons/fc";
+import { cn } from "../../lib/utils";
 import { Link, useNavigate } from "react-router-dom";
 import { Alert } from "../ui/alert";
 import { useDispatch, useSelector } from "react-redux";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import {
   signInFailure,
   signInStart,
   signInSuccess,
-} from "@/redux/user/userSlice";
-import { app } from "@/firebase";
-import { RootState } from "@/redux/store";
+} from "../../redux/user/userSlice";
+import { RootState } from "../../redux/store";
 import { Spinner } from "flowbite-react";
 
 const Input = React.forwardRef<
@@ -39,35 +36,8 @@ export default function SignInForm() {
   const { loading, error: errorMessage } = useSelector(
     (state: RootState) => state.user
   );
-  const auth = getAuth(app);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const handleGoogleClick = async () => {
-    const provider = new GoogleAuthProvider();
-    provider.setCustomParameters({ prompt: "select_account" });
-    try {
-      const resultsFromGoogle = await signInWithPopup(auth, provider);
-      const res = await fetch("/api/auth/google", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: resultsFromGoogle.user.displayName,
-          email: resultsFromGoogle.user.email,
-          googlePhotoUrl: resultsFromGoogle.user.photoURL,
-        }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        dispatch(signInSuccess(data));
-        navigate("/");
-      } else {
-        dispatch(signInFailure(data.message || "Sign in failed"));
-      }
-    } catch (error) {
-      dispatch(signInFailure((error as Error).message));
-    }
-  };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { id, value } = e.target;
@@ -166,18 +136,7 @@ export default function SignInForm() {
 
         <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 h-[1px] w-full" />
       </form>
-      <div className="flex flex-col space-y-4">
-        <button
-          className="relative group/btn flex space-x-2 items-center justify-center px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
-          onClick={handleGoogleClick}
-        >
-          <FcGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-          <span className="text-neutral-700 dark:text-neutral-300 text-sm">
-            Continue with Google
-          </span>
-          <BottomGradient />
-        </button>
-      </div>
+      <div className="flex flex-col space-y-4"></div>
       <div className="flex gap-2 text-sm mt-7 justify-center items-center">
         <span>Don't have an account?</span>
         <Link to="/sign-up">Sign up</Link>

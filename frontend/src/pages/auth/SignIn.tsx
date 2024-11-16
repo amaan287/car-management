@@ -1,17 +1,4 @@
-// import { Alert, Button, Spinner } from "flowbite-react";
-// import { Label } from "flowbite-react/components/Label";
-// import { TextInput } from "flowbite-react/components/TextInput";
-// import { ChangeEvent, FormEvent, useState } from "react";
-// import { Link, useNavigate } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
-// import {
-//   signInStart,
-//   signInSuccess,
-//   signInFailure,
-// } from "../../redux/user/userSlice";
-// import { RootState } from "../../redux/store";
-// import OAuth from "../../components/OAuth";
-import SignInForm from "@/components/example/signin-form";
+import SignInForm from "../../components/example/signin-form";
 
 export interface FormData {
   email?: string;
