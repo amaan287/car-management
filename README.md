@@ -1,10 +1,14 @@
 Live link https://car-management-xdbu.onrender.com/
+
+
 npm i 
 npm run dev
 
 cd frontend
 npm i 
 npm run dev
+
+dont forget to see .env.example file and add you own .env file according to it 
 
 login credentials: 
 { 
